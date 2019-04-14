@@ -9,6 +9,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".EndRegisterActivity"></activity>
+        <activity android:name=".SugarActivity" />
+        <activity android:name=".CholesterolActivity" />
+        <activity android:name=".HeightActivity" />
+        <activity android:name=".WeightActivity" />
+        <activity android:name=".GenderActivity" />
+        <activity android:name=".GoalActivity" />
+        <activity android:name=".RegisterActivity" />
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -19,10 +27,14 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main"
+<<<<<<< Updated upstream
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".FoodActivity"></activity>
         <activity android:name=".GraphicActivity">
         </activity>
+=======
+            android:theme="@style/AppTheme.NoActionBar" />
+>>>>>>> Stashed changes
     </application>
 
 </manifest>
