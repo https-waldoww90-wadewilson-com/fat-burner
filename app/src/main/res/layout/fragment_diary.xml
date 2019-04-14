@@ -3,258 +3,287 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:overScrollMode="ifContentScrolls"
     tools:context=".DiaryFragment">
+
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="396dp"
         android:fillViewport="true">
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:textStyle="bold"
                 android:paddingLeft="10dp"
-                android:text="FOOD DIARY"/>
+                android:text="FOOD DIARY"
+                android:textStyle="bold" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:paddingLeft="10dp"
-                android:text="Total Calories : 287"/>
+                android:text="Total Calories : 287" />
+
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:elevation="3dp">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
+
                     <LinearLayout
                         android:id="@+id/linear_breakfast"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
-                        android:weightSum="3"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:weightSum="3">
+
                         <ImageButton
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="0.5"
                             android:background="@color/colorWhite"
-                            android:src="@drawable/ic_add"/>
+                            android:src="@drawable/ic_add" />
 
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:layout_weight="2"
                             android:layout_gravity=""
-                            android:paddingTop="15dp"
+                            android:layout_weight="2"
                             android:paddingStart="20dp"
+                            android:paddingLeft="20dp"
+                            android:paddingTop="15dp"
                             android:text="Breakfast"
-                            android:textStyle="bold"
-                            android:paddingLeft="20dp" />
+                            android:textStyle="bold" />
+
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:layout_weight="0.5"
                             android:layout_gravity=""
-                            android:paddingTop="15dp"
+                            android:layout_weight="0.5"
+                            android:gravity="end"
                             android:paddingStart="20dp"
+                            android:paddingLeft="20dp"
+                            android:paddingTop="15dp"
                             android:paddingEnd="20dp"
                             android:text="0"
-                            android:textStyle="bold"
                             android:textAlignment="textEnd"
-                            android:gravity="end"
-                            android:paddingLeft="20dp" />
+                            android:textStyle="bold" />
                     </LinearLayout>
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingStart="20dp"
-                        android:paddingEnd="20dp"
-                        android:paddingTop="10dp"
-                        android:paddingBottom="10dp"
                         android:background="@color/colorLightGray"
-                        android:text="No Foods have yet been added"
-                        android:paddingLeft="20dp" />
+                        android:paddingStart="20dp"
+                        android:paddingLeft="20dp"
+                        android:paddingTop="10dp"
+                        android:paddingEnd="20dp"
+                        android:paddingBottom="10dp"
+                        android:text="No Foods have yet been added" />
                 </LinearLayout>
             </android.support.v7.widget.CardView>
+
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:elevation="3dp">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
+
                     <LinearLayout
                         android:id="@+id/linear_lunch"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
-                        android:weightSum="3"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:weightSum="3">
+
                         <ImageButton
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="0.5"
                             android:background="@color/colorWhite"
-                            android:src="@drawable/ic_add"/>
+                            android:src="@drawable/ic_add" />
 
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:layout_weight="2"
                             android:layout_gravity=""
-                            android:paddingTop="15dp"
+                            android:layout_weight="2"
                             android:paddingStart="20dp"
+                            android:paddingLeft="20dp"
+                            android:paddingTop="15dp"
                             android:text="Lunch"
-                            android:textStyle="bold"
-                            android:paddingLeft="20dp" />
+                            android:textStyle="bold" />
+
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:layout_weight="0.5"
                             android:layout_gravity=""
-                            android:paddingTop="15dp"
+                            android:layout_weight="0.5"
+                            android:gravity="end"
                             android:paddingStart="20dp"
+                            android:paddingLeft="20dp"
+                            android:paddingTop="15dp"
                             android:paddingEnd="20dp"
                             android:text="0"
-                            android:textStyle="bold"
                             android:textAlignment="textEnd"
-                            android:gravity="end"
-                            android:paddingLeft="20dp" />
+                            android:textStyle="bold" />
                     </LinearLayout>
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingStart="20dp"
-                        android:paddingEnd="20dp"
-                        android:paddingTop="10dp"
-                        android:paddingBottom="10dp"
                         android:background="@color/colorLightGray"
-                        android:text="No Foods have yet been added"
-                        android:paddingLeft="20dp" />
+                        android:paddingStart="20dp"
+                        android:paddingLeft="20dp"
+                        android:paddingTop="10dp"
+                        android:paddingEnd="20dp"
+                        android:paddingBottom="10dp"
+                        android:text="No Foods have yet been added" />
                 </LinearLayout>
             </android.support.v7.widget.CardView>
+
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:elevation="3dp">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
+
                     <LinearLayout
                         android:id="@+id/linear_dinner"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
-                        android:weightSum="3"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:weightSum="3">
+
                         <ImageButton
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="0.5"
                             android:background="@color/colorWhite"
-                            android:src="@drawable/ic_add"/>
+                            android:src="@drawable/ic_add" />
 
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:layout_weight="2"
                             android:layout_gravity=""
-                            android:paddingTop="15dp"
+                            android:layout_weight="2"
                             android:paddingStart="20dp"
+                            android:paddingLeft="20dp"
+                            android:paddingTop="15dp"
                             android:text="Dinner"
-                            android:textStyle="bold"
-                            android:paddingLeft="20dp" />
+                            android:textStyle="bold" />
+
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:layout_weight="0.5"
                             android:layout_gravity=""
-                            android:paddingTop="15dp"
+                            android:layout_weight="0.5"
+                            android:gravity="end"
                             android:paddingStart="20dp"
+                            android:paddingLeft="20dp"
+                            android:paddingTop="15dp"
                             android:paddingEnd="20dp"
                             android:text="0"
-                            android:textStyle="bold"
                             android:textAlignment="textEnd"
-                            android:gravity="end"
-                            android:paddingLeft="20dp" />
+                            android:textStyle="bold" />
                     </LinearLayout>
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingStart="20dp"
-                        android:paddingEnd="20dp"
-                        android:paddingTop="10dp"
-                        android:paddingBottom="10dp"
                         android:background="@color/colorLightGray"
-                        android:text="No Foods have yet been added"
-                        android:paddingLeft="20dp" />
+                        android:paddingStart="20dp"
+                        android:paddingLeft="20dp"
+                        android:paddingTop="10dp"
+                        android:paddingEnd="20dp"
+                        android:paddingBottom="10dp"
+                        android:text="No Foods have yet been added" />
                 </LinearLayout>
             </android.support.v7.widget.CardView>
+
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:elevation="3dp">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
+
                     <LinearLayout
                         android:id="@+id/linear_snack"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
-                        android:weightSum="3"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:weightSum="3">
+
                         <ImageButton
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="0.5"
                             android:background="@color/colorWhite"
-                            android:src="@drawable/ic_add"/>
+                            android:src="@drawable/ic_add" />
 
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:layout_weight="2"
                             android:layout_gravity=""
-                            android:paddingTop="15dp"
+                            android:layout_weight="2"
                             android:paddingStart="20dp"
+                            android:paddingLeft="20dp"
+                            android:paddingTop="15dp"
                             android:text="Snacks"
-                            android:textStyle="bold"
-                            android:paddingLeft="20dp" />
+                            android:textStyle="bold" />
+
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:layout_weight="0.5"
                             android:layout_gravity=""
-                            android:paddingTop="15dp"
+                            android:layout_weight="0.5"
+                            android:gravity="end"
                             android:paddingStart="20dp"
+                            android:paddingLeft="20dp"
+                            android:paddingTop="15dp"
                             android:paddingEnd="20dp"
                             android:text="0"
-                            android:textStyle="bold"
                             android:textAlignment="textEnd"
-                            android:gravity="end"
-                            android:paddingLeft="20dp" />
+                            android:textStyle="bold" />
                     </LinearLayout>
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingStart="20dp"
-                        android:paddingEnd="20dp"
-                        android:paddingTop="10dp"
-                        android:paddingBottom="10dp"
                         android:background="@color/colorLightGray"
-                        android:text="No Foods have yet been added"
-                        android:paddingLeft="20dp" />
+                        android:paddingStart="20dp"
+                        android:paddingLeft="20dp"
+                        android:paddingTop="10dp"
+                        android:paddingEnd="20dp"
+                        android:paddingBottom="10dp"
+                        android:text="No Foods have yet been added" />
                 </LinearLayout>
             </android.support.v7.widget.CardView>
         </LinearLayout>

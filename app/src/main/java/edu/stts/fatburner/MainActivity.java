@@ -1,5 +1,7 @@
 package edu.stts.fatburner;
 
+import android.app.FragmentManager;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -16,6 +18,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -53,7 +56,7 @@ public class MainActivity extends AppCompatActivity
             Fragment fragment;
             switch (item.getItemId()) {
                 case R.id.bnav_diary:
-                    setTitle("Fat Burner");
+                    setTitle("Diary");
                     fragment = new DiaryFragment();
                     loadFragment(fragment);
                     return true;
@@ -94,13 +97,17 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.nav_diary) {
-
+            setTitle("Diary");
+            loadFragment(new DiaryFragment());
         } else if (id == R.id.nav_home) {
-
+            setTitle("Home");
+            loadFragment(new HomeFragment());
         } else if (id == R.id.nav_plans) {
-
+            Intent i = new Intent(MainActivity.this,GraphicActivity.class);
+            startActivity(i);
         } else if (id == R.id.nav_report) {
-
+            setTitle("Reports");
+            loadFragment(new ReportsFragment());
         } else if (id == R.id.nav_settings) {
 
         }
