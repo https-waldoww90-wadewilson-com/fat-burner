@@ -28,6 +28,7 @@
             android:name=".MainActivity"
             android:label="@string/title_activity_main"
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".FoodActivity"></activity>
         <activity android:name=".GraphicActivity">
