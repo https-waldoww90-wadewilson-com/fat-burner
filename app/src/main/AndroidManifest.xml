@@ -36,6 +36,9 @@
 =======
             android:theme="@style/AppTheme.NoActionBar" />
 >>>>>>> Stashed changes
+=======
+            android:theme="@style/AppTheme.NoActionBar" />
+>>>>>>> Stashed changes
     </application>
 
 </manifest>
