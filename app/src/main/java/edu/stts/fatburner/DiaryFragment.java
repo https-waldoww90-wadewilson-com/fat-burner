@@ -16,6 +16,7 @@ public class DiaryFragment extends Fragment implements View.OnClickListener{
     private LinearLayout linearLunch;
     private LinearLayout linearDinner;
     private LinearLayout linearSnacks;
+    private LinearLayout linearWorkout;
     public DiaryFragment() {
     }
 
@@ -27,6 +28,7 @@ public class DiaryFragment extends Fragment implements View.OnClickListener{
         linearLunch = v.findViewById(R.id.linear_lunch);
         linearDinner = v.findViewById(R.id.linear_dinner);
         linearSnacks = v.findViewById(R.id.linear_snack);
+        linearWorkout = v.findViewById(R.id.linear_workout);
         return v;
     }
 
@@ -37,12 +39,15 @@ public class DiaryFragment extends Fragment implements View.OnClickListener{
         linearLunch.setOnClickListener(this);
         linearDinner.setOnClickListener(this);
         linearSnacks.setOnClickListener(this);
+        linearWorkout.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         if(v.getId() == R.id.linear_breakfast ||v.getId() == R.id.linear_lunch||v.getId() == R.id.linear_dinner||v.getId() == R.id.linear_snack){
             startActivity(new Intent(getActivity(),FoodActivity.class));
+        }else if(v.getId() == R.id.linear_workout){
+            startActivity(new Intent(getActivity(),WorkoutActivity.class));
         }
     }
 }

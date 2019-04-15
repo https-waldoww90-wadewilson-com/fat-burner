@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".EndRegisterActivity"></activity>
+        <activity android:name=".EndRegisterActivity" />
         <activity android:name=".SugarActivity" />
         <activity android:name=".CholesterolActivity" />
         <activity android:name=".HeightActivity" />
@@ -26,12 +26,13 @@
         </activity>
         <activity
             android:name=".MainActivity"
+            android:configChanges="orientation"
             android:label="@string/title_activity_main"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".FoodActivity"></activity>
-        <activity android:name=".GraphicActivity">
-
-        </activity>
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".FoodActivity" />
+        <activity android:name=".GraphicActivity"></activity>
+        <activity android:name=".WorkoutActivity"></activity>
     </application>
 
 </manifest>

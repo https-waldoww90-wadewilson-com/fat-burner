@@ -4,12 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginBottom="?attr/actionBarSize"
     tools:context=".HomeFragment">
 
     <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:id="@+id/card_prof"
         android:layout_width="match_parent"
         android:layout_height="75dp"
+        android:layout_margin="5dp"
         card_view:cardCornerRadius="4dp">
 
         <android.support.constraint.ConstraintLayout
@@ -42,7 +44,6 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
                 android:layout_marginTop="8dp"
-                android:background="@color/semiGray"
                 android:drawableLeft="@drawable/ic_diary"
                 android:gravity="center_vertical|center_horizontal"
                 android:text="1725 cal"
@@ -61,7 +62,6 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
-                android:background="@color/semiGray"
                 android:drawableLeft="@drawable/ic_weight"
                 android:gravity="center_vertical|center_horizontal"
                 android:text="1836 cal"
@@ -82,7 +82,6 @@
                 android:layout_marginLeft="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
-                android:background="@color/semiGray"
                 android:clickable="false"
                 android:gravity="center"
                 android:text="50kg"
@@ -99,16 +98,14 @@
                 android:layout_alignStart="@+id/textView4"
                 android:layout_alignLeft="@+id/textView4"
                 android:layout_alignBottom="@+id/imageView2"
-                android:layout_marginStart="12dp"
-                android:layout_marginLeft="12dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
-                android:background="@color/semiGray"
+                android:background="@color/colorLightGray"
                 android:drawableLeft="@drawable/ic_menu_camera"
                 android:paddingLeft="9dp"
                 android:textSize="8sp"
                 card_view:layout_constraintBottom_toBottomOf="parent"
-                card_view:layout_constraintStart_toEndOf="@+id/textView2"
+                card_view:layout_constraintStart_toStartOf="@+id/textView4"
                 card_view:layout_constraintTop_toBottomOf="@+id/textView4"
                 card_view:layout_constraintVertical_bias="1.0" />
 
@@ -119,16 +116,14 @@
                 android:layout_alignTop="@+id/button"
                 android:layout_gravity="center_vertical|end"
                 android:layout_marginTop="8dp"
-                android:layout_marginEnd="12dp"
-                android:layout_marginRight="12dp"
                 android:layout_marginBottom="8dp"
                 android:layout_toEndOf="@+id/button"
                 android:layout_toRightOf="@+id/button"
-                android:background="@color/semiGray"
+                android:background="@color/colorLightGray"
                 android:text="+ NEW"
                 android:textSize="10sp"
                 card_view:layout_constraintBottom_toBottomOf="parent"
-                card_view:layout_constraintEnd_toEndOf="parent"
+                card_view:layout_constraintEnd_toEndOf="@+id/textView4"
                 card_view:layout_constraintTop_toBottomOf="@+id/textView4"
                 card_view:layout_constraintVertical_bias="1.0" />
 
@@ -139,7 +134,7 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rview_article"
         android:layout_width="match_parent"
-        android:layout_height="312dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="top"
         android:layout_marginTop="80dp" />
 
