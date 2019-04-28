@@ -21,6 +21,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     public void nextWelcome(View v) {
+        User userBaru = new User();
         Intent intent = null;
         switch(v.getId()){
             case R.id.btnNextWelcome:
