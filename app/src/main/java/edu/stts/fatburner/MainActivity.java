@@ -1,28 +1,28 @@
 package edu.stts.fatburner;
 
-import android.app.FragmentManager;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.view.View;
-import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
+
+import edu.stts.fatburner.classObject.Food;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private BottomNavigationView bottomNav;
+    public static final int CODE_INFOFOOD = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,6 +80,16 @@ public class MainActivity extends AppCompatActivity
         transaction.replace(R.id.frame_container, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if(requestCode == CODE_INFOFOOD){
+            if(resultCode == Activity.RESULT_OK){
+                Food food = (Food) data.getExtras().getSerializable("food_data");
+                Toast.makeText(this,String.valueOf(Integer.parseInt(food.getKalori())* food.getJumlah()),Toast.LENGTH_LONG).show();
+            }
+        }
     }
 
     @Override

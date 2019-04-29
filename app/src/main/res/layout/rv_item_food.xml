@@ -6,10 +6,32 @@
     android:layout_margin="10dp"
     android:orientation="vertical">
     <TextView
-        android:id="@+id/rv_food_name"
+        android:id="@+id/rvrow_food_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textStyle="bold"
         android:paddingLeft="20dp"
         android:textSize="15sp"
         android:text="Pizza Meat Lovers"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="20dp"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/rvrow_food_porsi"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textColor="@color/colorLightOrange"
+            android:text="100 gram"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text=" - "/>
+        <TextView
+            android:id="@+id/rvrow_food_kalori"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="150 kcal"/>
+    </LinearLayout>
 </LinearLayout>

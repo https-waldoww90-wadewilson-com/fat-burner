@@ -1,11 +1,9 @@
 package edu.stts.fatburner;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
@@ -56,7 +54,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> res) {
                 LoginResponse response = res.body();
-                Toast.makeText(LoginActivity.this,response.getMessage(), Toast.LENGTH_LONG).show();
                 if(!response.isError()) startActivity(new Intent(LoginActivity.this,MainActivity.class));
             }
 

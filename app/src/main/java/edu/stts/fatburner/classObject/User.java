@@ -1,4 +1,4 @@
-package edu.stts.fatburner;
+package edu.stts.fatburner.classObject;
 
 import java.io.Serializable;
 

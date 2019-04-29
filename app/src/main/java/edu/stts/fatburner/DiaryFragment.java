@@ -17,8 +17,14 @@ public class DiaryFragment extends Fragment implements View.OnClickListener{
     private LinearLayout linearDinner;
     private LinearLayout linearSnacks;
     private LinearLayout linearWorkout;
+
     public DiaryFragment() {
     }
+
+    //if(data.isNullOrEmpty()) ll_docantreanactivty_empty.visibility = View.VISIBLE
+    //        else ll_docantreanactivty_empty.visibility = View.INVISIBLE
+    ///val fragment = (vp_patdetactivity.adapter as PatientTabAdapter).getFragment(0)
+    //                        fragment?.onResume()
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -45,7 +51,7 @@ public class DiaryFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onClick(View v) {
         if(v.getId() == R.id.linear_breakfast ||v.getId() == R.id.linear_lunch||v.getId() == R.id.linear_dinner||v.getId() == R.id.linear_snack){
-            startActivity(new Intent(getActivity(),FoodActivity.class));
+            getActivity().startActivityForResult(new Intent(getActivity(),FoodActivity.class),MainActivity.CODE_INFOFOOD);
         }else if(v.getId() == R.id.linear_workout){
             startActivity(new Intent(getActivity(),WorkoutActivity.class));
         }

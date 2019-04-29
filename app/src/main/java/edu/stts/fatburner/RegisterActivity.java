@@ -1,13 +1,13 @@
 package edu.stts.fatburner;
 
 import android.content.Intent;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.ImageButton;
+
+import edu.stts.fatburner.classObject.User;
 
 public class RegisterActivity extends AppCompatActivity {
     private ImageButton btnNextWelcome;

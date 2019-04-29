@@ -11,13 +11,14 @@ import android.widget.TextView;
 import java.util.List;
 
 import edu.stts.fatburner.R;
+import edu.stts.fatburner.classObject.Food;
 
 public class FoodRvAdapter extends RecyclerView.Adapter<FoodRvAdapter.ViewHolder>{
     private Context context;
-    private List<String> listFoods;
+    private List<Food> listFoods;
     private final rvListener listener;
 
-    public FoodRvAdapter(Context context,List<String> foods,rvListener listener){
+    public FoodRvAdapter(Context context,List<Food> foods,rvListener listener){
         this.listFoods = foods;
         this.context = context;
         this.listener = listener;
@@ -42,13 +43,20 @@ public class FoodRvAdapter extends RecyclerView.Adapter<FoodRvAdapter.ViewHolder
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         public TextView productName;
+        public TextView porsi;
+        public TextView kalori;
+
         public ViewHolder(View v){
             super(v);
-            productName = v.findViewById(R.id.rv_food_name);
+            productName = v.findViewById(R.id.rvrow_food_name);
+            porsi = v.findViewById(R.id.rvrow_food_porsi);
+            kalori = v.findViewById(R.id.rvrow_food_kalori);
         }
 
-        public void bind(final String item, final rvListener listener) {
-            productName.setText(item);
+        public void bind(final Food item, final rvListener listener) {
+            productName.setText(item.getNama());
+            porsi.setText("1 "+ item.getSatuan()+ " ("+item.getBerat()+" gram)");
+            kalori.setText(item.getKalori()+" cal");
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -58,7 +66,12 @@ public class FoodRvAdapter extends RecyclerView.Adapter<FoodRvAdapter.ViewHolder
         }
     }
 
+    public void setFilter(List<Food> listFiltered){
+        listFoods = listFiltered;
+        notifyDataSetChanged();
+    }
+
     public interface rvListener {
-        void onItemClick(String nama);
+        void onItemClick(Food food);
     }
 }
