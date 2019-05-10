@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".EndRegisterActivity"
+    tools:context=".ui.register.EndRegisterActivity"
     android:background="@drawable/bg_polos">
 
     <TextView
@@ -95,7 +95,7 @@
         android:layout_marginTop="12dp"
         android:ems="10"
         android:hint="Password"
-        android:inputType="textVisiblePassword|textPassword"
+        android:inputType="textPassword"
         app:layout_constraintStart_toEndOf="@+id/imageView4"
         app:layout_constraintTop_toBottomOf="@+id/etUsername2" />
 
@@ -119,7 +119,7 @@
         android:layout_marginTop="8dp"
         android:ems="10"
         android:hint="Confirm Password"
-        android:inputType="textVisiblePassword|textPassword"
+        android:inputType="textPassword"
         app:layout_constraintStart_toEndOf="@+id/imageView5"
         app:layout_constraintTop_toBottomOf="@+id/etPassword" />
 

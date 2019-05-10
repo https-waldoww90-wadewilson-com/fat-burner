@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:overScrollMode="ifContentScrolls"
     android:layout_marginBottom="?attr/actionBarSize"
-    tools:context=".DiaryFragment">
+    tools:context=".ui.main.DiaryFragment">
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -21,15 +21,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:paddingLeft="10dp"
+                android:paddingLeft="20dp"
                 android:text="FOOD DIARY"
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/tv_diary_totalcalories"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:paddingLeft="10dp"
+                android:paddingLeft="20dp"
                 android:text="Total Calories : 287" />
 
             <android.support.v7.widget.CardView
@@ -61,7 +62,7 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_gravity=""
-                            android:layout_weight="2"
+                            android:layout_weight="1"
                             android:paddingStart="20dp"
                             android:paddingLeft="20dp"
                             android:paddingTop="15dp"
@@ -69,18 +70,20 @@
                             android:textStyle="bold" />
 
                         <TextView
+                            android:id="@+id/totalBreakfast"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:layout_gravity=""
-                            android:layout_weight="0.5"
+                            android:layout_weight="1.5"
                             android:gravity="end"
                             android:paddingStart="20dp"
                             android:paddingLeft="20dp"
                             android:paddingTop="15dp"
                             android:paddingEnd="20dp"
                             android:text="0"
+                            android:textSize="15sp"
                             android:textAlignment="textEnd"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"
+                            android:paddingRight="20dp" />
                     </LinearLayout>
 
                     <android.support.v7.widget.RecyclerView
@@ -90,6 +93,7 @@
                         android:visibility="invisible"
                         android:clipToPadding="false"/>
                     <TextView
+                        android:id="@+id/tv_breakfast"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@color/colorLightGray"
@@ -131,7 +135,7 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_gravity=""
-                            android:layout_weight="2"
+                            android:layout_weight="1"
                             android:paddingStart="20dp"
                             android:paddingLeft="20dp"
                             android:paddingTop="15dp"
@@ -139,21 +143,29 @@
                             android:textStyle="bold" />
 
                         <TextView
+                            android:id="@+id/totalLunch"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_gravity=""
-                            android:layout_weight="0.5"
+                            android:layout_weight="1.5"
                             android:gravity="end"
                             android:paddingStart="20dp"
                             android:paddingLeft="20dp"
                             android:paddingTop="15dp"
                             android:paddingEnd="20dp"
+                            android:textSize="15sp"
                             android:text="0"
                             android:textAlignment="textEnd"
                             android:textStyle="bold" />
                     </LinearLayout>
-
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/rv_lunch"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:visibility="invisible"
+                        android:clipToPadding="false"/>
                     <TextView
+                        android:id="@+id/tv_lunch"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@color/colorLightGray"
@@ -195,7 +207,7 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_gravity=""
-                            android:layout_weight="2"
+                            android:layout_weight="1"
                             android:paddingStart="20dp"
                             android:paddingLeft="20dp"
                             android:paddingTop="15dp"
@@ -203,21 +215,29 @@
                             android:textStyle="bold" />
 
                         <TextView
+                            android:id="@+id/totalDinner"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_gravity=""
-                            android:layout_weight="0.5"
+                            android:layout_weight="1.5"
                             android:gravity="end"
                             android:paddingStart="20dp"
                             android:paddingLeft="20dp"
                             android:paddingTop="15dp"
                             android:paddingEnd="20dp"
+                            android:textSize="15sp"
                             android:text="0"
                             android:textAlignment="textEnd"
                             android:textStyle="bold" />
                     </LinearLayout>
-
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/rv_dinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:visibility="invisible"
+                        android:clipToPadding="false"/>
                     <TextView
+                        android:id="@+id/tv_dinner"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@color/colorLightGray"
@@ -259,7 +279,7 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_gravity=""
-                            android:layout_weight="2"
+                            android:layout_weight="1"
                             android:paddingStart="20dp"
                             android:paddingLeft="20dp"
                             android:paddingTop="15dp"
@@ -267,21 +287,29 @@
                             android:textStyle="bold" />
 
                         <TextView
+                            android:id="@+id/totalSnack"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_gravity=""
-                            android:layout_weight="0.5"
+                            android:layout_weight="1.5"
                             android:gravity="end"
                             android:paddingStart="20dp"
                             android:paddingLeft="20dp"
                             android:paddingTop="15dp"
                             android:paddingEnd="20dp"
+                            android:textSize="15sp"
                             android:text="0"
                             android:textAlignment="textEnd"
                             android:textStyle="bold" />
                     </LinearLayout>
-
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/rv_snack"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:visibility="invisible"
+                        android:clipToPadding="false"/>
                     <TextView
+                        android:id="@+id/tv_snack"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@color/colorLightGray"
@@ -322,7 +350,7 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_gravity=""
-                            android:layout_weight="2"
+                            android:layout_weight="1"
                             android:paddingStart="20dp"
                             android:paddingLeft="20dp"
                             android:paddingTop="15dp"
@@ -330,21 +358,29 @@
                             android:textStyle="bold" />
 
                         <TextView
+                            android:id="@+id/totalWorkout"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_gravity=""
-                            android:layout_weight="0.5"
+                            android:layout_weight="1.5"
                             android:gravity="end"
                             android:paddingStart="20dp"
                             android:paddingLeft="20dp"
                             android:paddingTop="15dp"
                             android:paddingEnd="20dp"
+                            android:textSize="15sp"
                             android:text="0"
                             android:textAlignment="textEnd"
                             android:textStyle="bold" />
                     </LinearLayout>
-
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/rv_workout"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:visibility="invisible"
+                        android:clipToPadding="false"/>
                     <TextView
+                        android:id="@+id/tv_workout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@color/colorLightGray"

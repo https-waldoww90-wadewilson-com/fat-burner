@@ -10,15 +10,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".EndRegisterActivity" />
-        <activity android:name=".SugarActivity" />
-        <activity android:name=".CholesterolActivity" />
-        <activity android:name=".HeightActivity" />
-        <activity android:name=".WeightActivity" />
-        <activity android:name=".GenderActivity" />
-        <activity android:name=".GoalActivity" />
-        <activity android:name=".RegisterActivity" />
-        <activity android:name=".LoginActivity">
+        <activity android:name=".ui.register.EndRegisterActivity" />
+        <activity android:name=".ui.register.SugarActivity" />
+        <activity android:name=".ui.register.CholesterolActivity" />
+        <activity android:name=".ui.register.HeightActivity" />
+        <activity android:name=".ui.register.WeightActivity" />
+        <activity android:name=".ui.register.GenderActivity" />
+        <activity android:name=".ui.register.GoalActivity" />
+        <activity android:name=".ui.register.RegisterActivity" />
+        <activity android:name=".ui.login.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -26,14 +26,14 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.main.MainActivity"
             android:configChanges="orientation"
             android:label="@string/title_activity_main"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".FoodActivity" />
-        <activity android:name=".GraphicActivity"></activity>
-        <activity android:name=".WorkoutActivity"></activity>
+        <activity android:name=".ui.main.FoodActivity" />
+        <activity android:name=".ui.main.GraphicActivity"></activity>
+        <activity android:name=".ui.register.WorkoutActivity"></activity>
     </application>
 
 </manifest>

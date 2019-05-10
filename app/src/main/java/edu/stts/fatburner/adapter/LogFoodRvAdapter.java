@@ -11,14 +11,14 @@ import android.widget.TextView;
 import java.util.List;
 
 import edu.stts.fatburner.R;
-import edu.stts.fatburner.data.model.Food;
+import edu.stts.fatburner.data.model.LogFood;
 
-public class FoodRvAdapter extends RecyclerView.Adapter<FoodRvAdapter.ViewHolder>{
+public class LogFoodRvAdapter extends RecyclerView.Adapter<LogFoodRvAdapter.ViewHolder> {
     private Context context;
-    private List<Food> listFoods;
+    private List<LogFood> listFoods;
     private final rvListener listener;
 
-    public FoodRvAdapter(Context context,List<Food> foods,rvListener listener){
+    public LogFoodRvAdapter(Context context,List<LogFood> foods,rvListener listener){
         this.listFoods = foods;
         this.context = context;
         this.listener = listener;
@@ -26,9 +26,9 @@ public class FoodRvAdapter extends RecyclerView.Adapter<FoodRvAdapter.ViewHolder
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.rv_item_food,parent,false);
-        return new ViewHolder(itemView);
+    public LogFoodRvAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.rv_item_logfood,parent,false);
+        return new LogFoodRvAdapter.ViewHolder(itemView);
     }
 
     @Override
@@ -44,19 +44,19 @@ public class FoodRvAdapter extends RecyclerView.Adapter<FoodRvAdapter.ViewHolder
     public class ViewHolder extends RecyclerView.ViewHolder{
         public TextView productName;
         public TextView porsi;
-        public TextView kalori;
+        public TextView totkalori;
 
         public ViewHolder(View v){
             super(v);
-            productName = v.findViewById(R.id.rvrow_food_name);
-            porsi = v.findViewById(R.id.rvrow_food_porsi);
-            kalori = v.findViewById(R.id.rvrow_food_kalori);
+            productName = v.findViewById(R.id.rvrow_logfood_name);
+            porsi = v.findViewById(R.id.rvrow_logfood_porsi);
+            totkalori = v.findViewById(R.id.rvrow_logfood_totalcal);
         }
 
-        public void bind(final Food item, final rvListener listener) {
+        public void bind(final LogFood item, final rvListener listener) {
             productName.setText(item.getNama());
-            porsi.setText("1 "+ item.getSatuan()+ " ("+item.getBerat()+" gram)");
-            kalori.setText(item.getKalori()+" cal");
+            porsi.setText(item.getSatuan()+" X "+ " "+item.getBerat()+" gram");
+            totkalori.setText(String.valueOf(item.getKalori() * item.getSatuan()));
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -66,12 +66,7 @@ public class FoodRvAdapter extends RecyclerView.Adapter<FoodRvAdapter.ViewHolder
         }
     }
 
-    public void setFilter(List<Food> listFiltered){
-        listFoods = listFiltered;
-        notifyDataSetChanged();
-    }
-
     public interface rvListener {
-        void onItemClick(Food food);
+        void onItemClick(LogFood food);
     }
 }
