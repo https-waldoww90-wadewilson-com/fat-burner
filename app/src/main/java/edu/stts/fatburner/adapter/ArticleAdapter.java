@@ -35,7 +35,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-        viewHolder.tvNama.setText(articleList.get(i).getEmail());
+        viewHolder.tvNama.setText(articleList.get(i).getNama());
         viewHolder.tvTanggal.setText(articleList.get(i).getDatecreated());
         viewHolder.tvIsi.setText(articleList.get(i).getIsi()+"");
         Glide.with(context)

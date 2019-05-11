@@ -3,14 +3,17 @@ package edu.stts.fatburner.ui.login;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import edu.stts.fatburner.ui.main.MainActivity;
 import edu.stts.fatburner.R;
 import edu.stts.fatburner.ui.register.RegisterActivity;
@@ -29,6 +32,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private TextView tvPassword;
     private API mApiInterface;
     private SharedPreferences pref;
+    private SweetAlertDialog pLoadingDialog,pErrorDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,20 +61,34 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void doLogin(String email,String password){
+        //untuk loading dialog
+        pLoadingDialog = new SweetAlertDialog(this,SweetAlertDialog.PROGRESS_TYPE);
+        pLoadingDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+        pLoadingDialog.setTitleText("Loading");
+        pLoadingDialog.setCancelable(false);
+        pLoadingDialog.show();
+
+        //untuk error dialog
+        pErrorDialog = new SweetAlertDialog(this, SweetAlertDialog.ERROR_TYPE);
+        pErrorDialog.setTitle("Oops..");
+        pErrorDialog.setTitleText("Invalid email or password");
+
         Call<LoginResponse> loginCall = mApiInterface.login(new LoginBody(email,password));
         loginCall.enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> res) {
+                pLoadingDialog.dismissWithAnimation();
                 LoginResponse response = res.body();
                 if(!response.isError()){
                     saveUserLoginID(Integer.parseInt(response.getMessage()));
                     startActivity(new Intent(LoginActivity.this,MainActivity.class));
                 }
-                else Toast.makeText(LoginActivity.this,response.getMessage(), Toast.LENGTH_LONG).show();
+                else pErrorDialog.show();
             }
 
             @Override
             public void onFailure(Call<LoginResponse> call, Throwable t) {
+                pLoadingDialog.dismissWithAnimation();
                 Toast.makeText(LoginActivity.this,t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });

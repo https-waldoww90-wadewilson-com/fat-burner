@@ -22,8 +22,8 @@
         android:background="?android:attr/windowBackground"
         app:itemBackground="@color/colorPrimary"
         android:foreground="?attr/selectableItemBackground"
-        app:itemIconTint="@color/colorWhite"
-        app:itemTextColor="@color/colorWhite"
+        app:itemTextColor="@color/colorBrown"
+        app:itemIconTint="@drawable/bottom_navigation_selector"
         app:menu="@menu/main_bottom_navigation" />
 
 

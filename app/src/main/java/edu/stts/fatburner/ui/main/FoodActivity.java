@@ -2,6 +2,7 @@ package edu.stts.fatburner.ui.main;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import edu.stts.fatburner.R;
 import edu.stts.fatburner.adapter.FoodRvAdapter;
 import edu.stts.fatburner.data.model.Food;
@@ -73,6 +75,8 @@ public class FoodActivity extends AppCompatActivity implements SearchView.OnQuer
         rvFood.setLayoutManager(lm);
         rvFood.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         rvFood.setAdapter(rvAdapter);
+
+
     }
 
     @Override

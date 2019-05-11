@@ -31,7 +31,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:paddingLeft="20dp"
-                android:text="Total Calories : 287" />
+                android:text="Total Calories : 0 Cals" />
 
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"

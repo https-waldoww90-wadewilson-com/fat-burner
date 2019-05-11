@@ -3,6 +3,7 @@ package edu.stts.fatburner.ui.main;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -14,12 +15,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
 
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import edu.stts.fatburner.R;
 import edu.stts.fatburner.adapter.LogFoodRvAdapter;
 import edu.stts.fatburner.data.model.LogFood;
@@ -41,6 +45,7 @@ public class DiaryFragment extends Fragment implements View.OnClickListener{
     private RecyclerView rvBreakfast,rvLunch,rvDinner,rvSnack,rvWorkout;
     private LogFoodRvAdapter breakfastAdapter,lunchAdapter,dinnerAdapter,snackAdapter;
     private int totalBreakfast = 0,totalLunch = 0,totalDinner = 0,totalSnack=0,totalWorkout = 0;
+    private SweetAlertDialog pDialog;
 
     public DiaryFragment() {
     }
@@ -142,8 +147,15 @@ public class DiaryFragment extends Fragment implements View.OnClickListener{
 
         //Untuk ambil session
         pref = requireContext().getSharedPreferences("FatBurnerPrefs",Context.MODE_PRIVATE);
+
+        //untuk dialog
+        pDialog = new SweetAlertDialog(requireContext(),SweetAlertDialog.PROGRESS_TYPE);
+        pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+        pDialog.setTitleText("Loading");
+        pDialog.setCancelable(false);
+        pDialog.show();
+
         loadLogUser();
-        calculateTotalCalories();
     }
 
     private void loadLogUser(){
@@ -232,7 +244,8 @@ public class DiaryFragment extends Fragment implements View.OnClickListener{
     }
 
     private void calculateTotalCalories(){
-        tvTotalCalories.setText("Total Calories: "+String.valueOf(totalBreakfast + totalLunch + totalDinner + totalSnack - totalWorkout) + " Cals");
+        tvTotalCalories.setText("Total Calories : "+String.valueOf(totalBreakfast + totalLunch + totalDinner + totalSnack - totalWorkout) + " Cals");
+        pDialog.dismissWithAnimation();
     }
 
     @Override
