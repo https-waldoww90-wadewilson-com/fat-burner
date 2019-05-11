@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        setTitle("Fat Burner");
+        setTitle("Home");
 
         //Untuk Navigation
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -64,6 +64,7 @@ public class MainActivity extends AppCompatActivity
                     loadFragment(fragment);
                     return true;
                 case R.id.bnav_home:
+                    setTitle("Home");
                     fragment = new HomeFragment();
                     loadFragment(fragment);
                     return true;
@@ -102,7 +103,7 @@ public class MainActivity extends AppCompatActivity
             drawer.closeDrawer(GravityCompat.START);
         } else {
             finish();
-            //super.onBackPressed();
+            super.onBackPressed();
         }
     }
 

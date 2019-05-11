@@ -82,6 +82,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 if(!response.isError()){
                     saveUserLoginID(Integer.parseInt(response.getMessage()));
                     startActivity(new Intent(LoginActivity.this,MainActivity.class));
+                    finish();
                 }
                 else pErrorDialog.show();
             }
