@@ -35,7 +35,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".ui.main.FoodActivity" />
         <activity android:name=".ui.main.GraphicActivity"></activity>
-        <activity android:name=".ui.register.WorkoutActivity"></activity>
+        <activity android:name=".ui.main.WorkoutActivity"></activity>
     </application>
 
 </manifest>

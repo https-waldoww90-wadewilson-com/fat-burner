@@ -15,7 +15,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,10 +25,14 @@ import java.util.List;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import edu.stts.fatburner.R;
 import edu.stts.fatburner.adapter.LogFoodRvAdapter;
+import edu.stts.fatburner.adapter.LogWorkoutRvAdapter;
 import edu.stts.fatburner.data.model.LogFood;
+import edu.stts.fatburner.data.model.LogWorkout;
 import edu.stts.fatburner.data.network.API;
 import edu.stts.fatburner.data.network.ApiClient;
-import edu.stts.fatburner.ui.register.WorkoutActivity;
+import edu.stts.fatburner.ui.dialog.EditFoodDialog;
+import edu.stts.fatburner.ui.dialog.EditWorkoutDialog;
+import edu.stts.fatburner.ui.dialog.FoodCategoryDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -42,8 +45,10 @@ public class DiaryFragment extends Fragment implements View.OnClickListener{
     private API mApiInterface;
     private SharedPreferences pref;
     private List<LogFood> listBreakfast,listLunch,listDinner,listSnack;
+    private List<LogWorkout> listWorkout;
     private RecyclerView rvBreakfast,rvLunch,rvDinner,rvSnack,rvWorkout;
     private LogFoodRvAdapter breakfastAdapter,lunchAdapter,dinnerAdapter,snackAdapter;
+    private LogWorkoutRvAdapter workoutAdapter;
     private int totalBreakfast = 0,totalLunch = 0,totalDinner = 0,totalSnack=0,totalWorkout = 0;
     private SweetAlertDialog pDialog;
 
@@ -81,7 +86,7 @@ public class DiaryFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onResume() {
         super.onResume();
-        loadLogUser();
+        loadLogFoodUser();
     }
 
     @Override
@@ -97,11 +102,20 @@ public class DiaryFragment extends Fragment implements View.OnClickListener{
         listLunch = new ArrayList<>();
         listDinner = new ArrayList<>();
         listSnack = new ArrayList<>();
+        listWorkout = new ArrayList<>();
         //rv breakfast
         breakfastAdapter = new LogFoodRvAdapter(requireContext(), listBreakfast, new LogFoodRvAdapter.rvListener() {
             @Override
             public void onItemClick(LogFood food) {
-
+                EditFoodDialog dialog = EditFoodDialog.newInstance(food);
+                dialog.setCallback(new EditFoodDialog.Callback() {
+                    @Override
+                    public void perform(boolean success) {
+                        loadLogFoodUser();
+                        loadLogWorkoutUser();
+                    }
+                });
+                dialog.show(getFragmentManager(), "tag");
             }
         });
         RecyclerView.LayoutManager lm = new LinearLayoutManager(requireContext());
@@ -113,7 +127,15 @@ public class DiaryFragment extends Fragment implements View.OnClickListener{
         lunchAdapter = new LogFoodRvAdapter(requireContext(), listLunch, new LogFoodRvAdapter.rvListener() {
             @Override
             public void onItemClick(LogFood food) {
-
+                EditFoodDialog dialog = EditFoodDialog.newInstance(food);
+                dialog.setCallback(new EditFoodDialog.Callback() {
+                    @Override
+                    public void perform(boolean success) {
+                        loadLogFoodUser();
+                        loadLogWorkoutUser();
+                    }
+                });
+                dialog.show(getFragmentManager(), "tag");
             }
         });
         RecyclerView.LayoutManager lmLunch = new LinearLayoutManager(requireContext());
@@ -125,7 +147,15 @@ public class DiaryFragment extends Fragment implements View.OnClickListener{
         dinnerAdapter = new LogFoodRvAdapter(requireContext(), listDinner, new LogFoodRvAdapter.rvListener() {
             @Override
             public void onItemClick(LogFood food) {
-
+                EditFoodDialog dialog = EditFoodDialog.newInstance(food);
+                dialog.setCallback(new EditFoodDialog.Callback() {
+                    @Override
+                    public void perform(boolean success) {
+                        loadLogFoodUser();
+                        loadLogWorkoutUser();
+                    }
+                });
+                dialog.show(getFragmentManager(), "tag");
             }
         });
         RecyclerView.LayoutManager lmDinner = new LinearLayoutManager(requireContext());
@@ -137,13 +167,41 @@ public class DiaryFragment extends Fragment implements View.OnClickListener{
         snackAdapter = new LogFoodRvAdapter(requireContext(), listSnack, new LogFoodRvAdapter.rvListener() {
             @Override
             public void onItemClick(LogFood food) {
-
+                EditFoodDialog dialog = EditFoodDialog.newInstance(food);
+                dialog.setCallback(new EditFoodDialog.Callback() {
+                    @Override
+                    public void perform(boolean success) {
+                        loadLogFoodUser();
+                        loadLogWorkoutUser();
+                    }
+                });
+                dialog.show(getFragmentManager(), "tag");
             }
         });
         RecyclerView.LayoutManager lmSnack = new LinearLayoutManager(requireContext());
         rvSnack.setLayoutManager(lmSnack);
         rvSnack.addItemDecoration(new DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL));
         rvSnack.setAdapter(snackAdapter);
+
+        //rv workout
+        workoutAdapter = new LogWorkoutRvAdapter(requireContext(), listWorkout, new LogWorkoutRvAdapter.rvListener() {
+            @Override
+            public void onItemClick(LogWorkout workout) {
+                EditWorkoutDialog dialog = EditWorkoutDialog.newInstance(workout);
+                dialog.setCallback(new EditWorkoutDialog.Callback() {
+                    @Override
+                    public void perform(boolean success) {
+                        loadLogFoodUser();
+                        loadLogWorkoutUser();
+                    }
+                });
+                dialog.show(getFragmentManager(), "tag");
+            }
+        });
+        RecyclerView.LayoutManager lmWorkout = new LinearLayoutManager(requireContext());
+        rvWorkout.setLayoutManager(lmWorkout);
+        rvWorkout.addItemDecoration(new DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL));
+        rvWorkout.setAdapter(workoutAdapter);
 
         //Untuk ambil session
         pref = requireContext().getSharedPreferences("FatBurnerPrefs",Context.MODE_PRIVATE);
@@ -154,18 +212,18 @@ public class DiaryFragment extends Fragment implements View.OnClickListener{
         pDialog.setTitleText("Loading");
         pDialog.setCancelable(false);
         pDialog.show();
-
-        loadLogUser();
+        loadLogFoodUser();
+        loadLogWorkoutUser();
     }
 
-    private void loadLogUser(){
+    private void loadLogFoodUser(){
         int userid = pref.getInt("userID",-1);
-        Call<List<LogFood>> loadCall = mApiInterface.getLogFood(userid);
+        Call<List<LogFood>> loadCall = mApiInterface.getLogFood(userid,"date");
         loadCall.enqueue(new Callback<List<LogFood>>() {
             @Override
             public void onResponse(Call<List<LogFood>> call, Response<List<LogFood>> res) {
                 List<LogFood> response = res.body();
-                displayData(response);
+                displayLogFoodData(response);
             }
 
             @Override
@@ -175,7 +233,43 @@ public class DiaryFragment extends Fragment implements View.OnClickListener{
         });
     }
 
-    private void displayData(List<LogFood> data){
+    private void loadLogWorkoutUser(){
+        int userid = pref.getInt("userID",-1);
+        Call<List<LogWorkout>> loadCall = mApiInterface.getLogWorkout(userid,"date");
+        loadCall.enqueue(new Callback<List<LogWorkout>>() {
+            @Override
+            public void onResponse(Call<List<LogWorkout>> call, Response<List<LogWorkout>> res) {
+                List<LogWorkout> response = res.body();
+                displayLogWorkoutData(response);
+            }
+
+            @Override
+            public void onFailure(Call<List<LogWorkout>> call, Throwable t) {
+                Toast.makeText(requireContext(),t.getMessage(),Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    private void displayLogWorkoutData(List<LogWorkout> data){
+        totalWorkout = 0;
+        listWorkout.clear();
+        listWorkout.addAll(data);
+        workoutAdapter.notifyDataSetChanged();
+        for(int i=0;i<data.size();i++){
+            totalWorkout += data.get(i).getWaktu_workout() * data.get(i).getKalori();
+        }
+        tvTotalWorkout.setText(String.valueOf(totalWorkout));
+        if(listWorkout.size() == 0){
+            rvWorkout.setVisibility(View.GONE);
+            tvEmptyWorkout.setVisibility(View.VISIBLE);
+        }else{
+            rvWorkout.setVisibility(View.VISIBLE);
+            tvEmptyWorkout.setVisibility(View.GONE);
+        }
+        calculateTotalCalories();
+    }
+
+    private void displayLogFoodData(List<LogFood> data){
         totalBreakfast = 0; totalLunch = 0; totalDinner = 0; totalSnack=0;
         listBreakfast.clear();
         listLunch.clear();
@@ -183,16 +277,16 @@ public class DiaryFragment extends Fragment implements View.OnClickListener{
         listSnack.clear();
         for(int i=0;i<data.size();i++){
             if(data.get(i).getTipe().toLowerCase().equals("breakfast")) {
-                totalBreakfast += data.get(i).getSatuan() * data.get(i).getKalori();
+                totalBreakfast += data.get(i).getJumlah() * data.get(i).getKalori();
                 listBreakfast.add(data.get(i));
             }else if(data.get(i).getTipe().toLowerCase().equals("lunch")) {
-                totalLunch += data.get(i).getSatuan() * data.get(i).getKalori();
+                totalLunch += data.get(i).getJumlah() * data.get(i).getKalori();
                 listLunch.add(data.get(i));
             }else if(data.get(i).getTipe().toLowerCase().equals("dinner")) {
-                totalDinner += data.get(i).getSatuan() * data.get(i).getKalori();
+                totalDinner += data.get(i).getJumlah() * data.get(i).getKalori();
                 listDinner.add(data.get(i));
             }else if(data.get(i).getTipe().toLowerCase().equals("snack")) {
-                totalSnack += data.get(i).getSatuan() * data.get(i).getKalori();
+                totalSnack += data.get(i).getJumlah() * data.get(i).getKalori();
                 listSnack.add(data.get(i));
             }
         }
@@ -251,23 +345,59 @@ public class DiaryFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onClick(View v) {
         if(v.getId() == R.id.linear_breakfast){
-            Intent i = new Intent(getActivity(),FoodActivity.class);
-            i.putExtra("type","breakfast");
-            getActivity().startActivityForResult(i,MainActivity.CODE_INFOFOOD);
-        }else if(v.getId() == R.id.linear_lunch){
-            Intent i = new Intent(getActivity(),FoodActivity.class);
-            i.putExtra("type","lunch");
-            getActivity().startActivityForResult(i,MainActivity.CODE_INFOFOOD);
-        }else if(v.getId() == R.id.linear_dinner){
-            Intent i = new Intent(getActivity(),FoodActivity.class);
-            i.putExtra("type","dinner");
-            getActivity().startActivityForResult(i,MainActivity.CODE_INFOFOOD);
-        }else if(v.getId() == R.id.linear_snack){
-            Intent i = new Intent(getActivity(),FoodActivity.class);
-            i.putExtra("type","snack");
-            getActivity().startActivityForResult(i,MainActivity.CODE_INFOFOOD);
+            FoodCategoryDialog dialog = FoodCategoryDialog.newInstance();
+            dialog.setCallback(new FoodCategoryDialog.Callback() {
+                @Override
+                public void choosen(String categoryName) {
+                    Intent i = new Intent(getActivity(),FoodActivity.class);
+                    i.putExtra("type","breakfast");
+                    i.putExtra("category",categoryName);
+                    getActivity().startActivityForResult(i,MainActivity.CODE_INFOFOOD);
+                }
+            });
+            dialog.show(getFragmentManager(), "tag");
+        }
+        else if(v.getId() == R.id.linear_lunch){
+            FoodCategoryDialog dialog = FoodCategoryDialog.newInstance();
+            dialog.setCallback(new FoodCategoryDialog.Callback() {
+                @Override
+                public void choosen(String categoryName) {
+                    Intent i = new Intent(getActivity(),FoodActivity.class);
+                    i.putExtra("type","lunch");
+                    i.putExtra("category",categoryName);
+                    getActivity().startActivityForResult(i,MainActivity.CODE_INFOFOOD);
+                }
+            });
+            dialog.show(getFragmentManager(), "tag");
+        }
+        else if(v.getId() == R.id.linear_dinner){
+            FoodCategoryDialog dialog = FoodCategoryDialog.newInstance();
+            dialog.setCallback(new FoodCategoryDialog.Callback() {
+                @Override
+                public void choosen(String categoryName) {
+                    Intent i = new Intent(getActivity(),FoodActivity.class);
+                    i.putExtra("type","dinner");
+                    i.putExtra("category",categoryName);
+                    getActivity().startActivityForResult(i,MainActivity.CODE_INFOFOOD);
+                }
+            });
+            dialog.show(getFragmentManager(), "tag");
+        }
+        else if(v.getId() == R.id.linear_snack){
+            FoodCategoryDialog dialog = FoodCategoryDialog.newInstance();
+            dialog.setCallback(new FoodCategoryDialog.Callback() {
+                @Override
+                public void choosen(String categoryName) {
+                    Intent i = new Intent(getActivity(),FoodActivity.class);
+                    i.putExtra("type","snack");
+                    i.putExtra("category",categoryName);
+                    getActivity().startActivityForResult(i,MainActivity.CODE_INFOFOOD);
+                }
+            });
+            dialog.show(getFragmentManager(), "tag");
         }else if(v.getId() == R.id.linear_workout){
-            startActivity(new Intent(getActivity(),WorkoutActivity.class));
+            Intent i = new Intent(getActivity(),WorkoutActivity.class);
+            getActivity().startActivityForResult(i,MainActivity.CODE_INFOFOOD);
         }
     }
 }

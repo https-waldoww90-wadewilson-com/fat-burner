@@ -19,30 +19,31 @@ import android.widget.Toast;
 
 import edu.stts.fatburner.R;
 import edu.stts.fatburner.data.model.Food;
+import edu.stts.fatburner.data.model.Workout;
 import edu.stts.fatburner.data.network.API;
 import edu.stts.fatburner.data.network.ApiClient;
 import edu.stts.fatburner.data.network.body.LogFoodBody;
+import edu.stts.fatburner.data.network.body.LogWorkoutBody;
 import edu.stts.fatburner.data.network.response.InsertResponse;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ChooseFoodDialog extends DialogFragment implements View.OnClickListener {
-    private TextView tvFoodName,tvSatuan,tvKalori;
+public class ChooseWorkoutDialog extends DialogFragment implements View.OnClickListener {
+    private TextView tvName,tvSatuan,tvKalori;
     private EditText etJumlah;
     private Button btnSave;
     private ImageButton btnClose;
-    private Food chosenFood;
+    private Workout chosenWorkout;
     private String type;
     private SharedPreferences sp;
     private API mApiInterface;
     public Callback callback;
 
-    public static ChooseFoodDialog newInstance(Food data,String type){
-        ChooseFoodDialog instance = new ChooseFoodDialog();
+    public static ChooseWorkoutDialog newInstance(Workout data){
+        ChooseWorkoutDialog instance = new ChooseWorkoutDialog();
         Bundle b = new Bundle();
-        b.putString("type",type);
-        b.putSerializable("food_data",data);
+        b.putSerializable("workout_data",data);
         instance.setArguments(b);
         return instance;
     }
@@ -50,13 +51,13 @@ public class ChooseFoodDialog extends DialogFragment implements View.OnClickList
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.dialog_choose_food, container, false);
-        tvFoodName = v.findViewById(R.id.dialog_choose_foodname);
-        tvKalori = v.findViewById(R.id.dialog_choose_kalori);
-        tvSatuan = v.findViewById(R.id.dialog_choose_satuan);
-        etJumlah = v.findViewById(R.id.dialog_choose_jumlah);
-        btnSave = v.findViewById(R.id.dialog_choose_save);
-        btnClose = v.findViewById(R.id.dialog_choose_close);
+        View v = inflater.inflate(R.layout.dialog_choose_workout, container, false);
+        tvName = v.findViewById(R.id.dialog_chooseworkout_name);
+        tvKalori = v.findViewById(R.id.dialog_chooseworkout_kalori);
+        tvSatuan = v.findViewById(R.id.dialog_chooseworkout_satuan);
+        etJumlah = v.findViewById(R.id.dialog_chooseworkout_jumlah);
+        btnSave = v.findViewById(R.id.dialog_chooseworkout_save);
+        btnClose = v.findViewById(R.id.dialog_chooseworkout_close);
         btnSave.setOnClickListener(this);
         btnClose.setOnClickListener(this);
         mApiInterface = ApiClient.getClient().create(API.class);
@@ -71,7 +72,7 @@ public class ChooseFoodDialog extends DialogFragment implements View.OnClickList
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if(!s.toString().equals("")) {
                     Integer jumlah = Integer.parseInt(s.toString());
-                    tvKalori.setText(String.valueOf(jumlah * Integer.parseInt(chosenFood.getKalori())));
+                    tvKalori.setText(String.valueOf(jumlah * Integer.parseInt(chosenWorkout.getKalori()+"")));
                 }else tvKalori.setText("0");
             }
         });
@@ -95,35 +96,35 @@ public class ChooseFoodDialog extends DialogFragment implements View.OnClickList
         sp = getContext().getSharedPreferences("FatBurnerPrefs",Context.MODE_PRIVATE);
         //ambil data yg dipassing dari food activity
         type =  getArguments().getString("type");
-        chosenFood = (Food) getArguments().getSerializable("food_data");
-        tvFoodName.setText(chosenFood.getNama());
-        tvSatuan.setText(chosenFood.getSatuan());
-        tvKalori.setText(chosenFood.getKalori());
+        chosenWorkout = (Workout) getArguments().getSerializable("workout_data");
+        tvName.setText(chosenWorkout.getNama());
+        tvSatuan.setText("minute");
+        tvKalori.setText(chosenWorkout.getKalori()+"");
     }
 
     @Override
     public void onClick(View v) {
         int id = v.getId();
-        if(id == R.id.dialog_choose_close){
+        if(id == R.id.dialog_chooseworkout_close){
             dismiss();
-        }else if(id == R.id.dialog_choose_save){
+        }else if(id == R.id.dialog_chooseworkout_save){
             if(!etJumlah.getText().toString().equals("") && !etJumlah.getText().toString().equals("0")){
-                saveLogFood(Integer.parseInt(etJumlah.getText().toString()));
-            }else Toast.makeText(requireContext(),"Field size must not be empty!",Toast.LENGTH_LONG).show();
+                saveLogWorkout(Integer.parseInt(etJumlah.getText().toString()));
+            }else Toast.makeText(requireContext(),"Field size must not be zero or empty!",Toast.LENGTH_LONG).show();
         }
     }
 
-    private void saveLogFood(int jumlah){
+    private void saveLogWorkout(int waktu){
         //ambil id user
         int userid = sp.getInt("userID",-1);
-        LogFoodBody body = new LogFoodBody(userid,Integer.parseInt(chosenFood.getId()),type,jumlah);
-        Call<InsertResponse> saveCall = mApiInterface.saveLogFood(body);
+        LogWorkoutBody body = new LogWorkoutBody(userid,Integer.parseInt(chosenWorkout.getId()+""),waktu);
+        Call<InsertResponse> saveCall = mApiInterface.saveLogWorkout(body);
         saveCall.enqueue(new retrofit2.Callback<InsertResponse>() {
             @Override
             public void onResponse(Call<InsertResponse> call, Response<InsertResponse> res) {
                 InsertResponse response = res.body();
                 if(!response.isError()){
-                    callback.foodChoosen(true);
+                    callback.workoutChoosen(true);
                     dismiss();
                 }
                 else Toast.makeText(requireContext(),response.getMessage(), Toast.LENGTH_LONG).show();
@@ -131,13 +132,13 @@ public class ChooseFoodDialog extends DialogFragment implements View.OnClickList
 
             @Override
             public void onFailure(Call<InsertResponse> call, Throwable t) {
-                Toast.makeText(requireContext(),t.getMessage(),Toast.LENGTH_LONG).show();
+                Toast.makeText(requireContext(),t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }
 
     public interface Callback {
-        void foodChoosen(boolean success);
+        void workoutChoosen(boolean success);
     }
 }
 

@@ -12,51 +12,52 @@ import java.util.List;
 
 import edu.stts.fatburner.R;
 import edu.stts.fatburner.data.model.LogFood;
+import edu.stts.fatburner.data.model.LogWorkout;
 
-public class LogFoodRvAdapter extends RecyclerView.Adapter<LogFoodRvAdapter.ViewHolder> {
+public class LogWorkoutRvAdapter extends RecyclerView.Adapter<LogWorkoutRvAdapter.ViewHolder> {
     private Context context;
-    private List<LogFood> listFoods;
+    private List<LogWorkout> listWorkout;
     private final rvListener listener;
 
-    public LogFoodRvAdapter(Context context,List<LogFood> foods,rvListener listener){
-        this.listFoods = foods;
+    public LogWorkoutRvAdapter(Context context, List<LogWorkout> work, rvListener listener){
+        this.listWorkout = work;
         this.context = context;
         this.listener = listener;
     }
 
     @NonNull
     @Override
-    public LogFoodRvAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public LogWorkoutRvAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.rv_item_logfood,parent,false);
-        return new LogFoodRvAdapter.ViewHolder(itemView);
+        return new LogWorkoutRvAdapter.ViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.bind(listFoods.get(position), listener);
+        holder.bind(listWorkout.get(position), listener);
     }
 
     @Override
     public int getItemCount() {
-        return listFoods.size();
+        return listWorkout.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        public TextView productName;
-        public TextView porsi;
+        public TextView workoutName;
+        public TextView waktu;
         public TextView totkalori;
 
         public ViewHolder(View v){
             super(v);
-            productName = v.findViewById(R.id.rvrow_logfood_name);
-            porsi = v.findViewById(R.id.rvrow_logfood_porsi);
+            workoutName = v.findViewById(R.id.rvrow_logfood_name);
+            waktu = v.findViewById(R.id.rvrow_logfood_porsi);
             totkalori = v.findViewById(R.id.rvrow_logfood_totalcal);
         }
 
-        public void bind(final LogFood item, final rvListener listener) {
-            productName.setText(item.getNama());
-            porsi.setText(item.getJumlah()+" X "+ " "+item.getBerat()+" gram");
-            totkalori.setText(String.valueOf(item.getKalori() * item.getJumlah()));
+        public void bind(final LogWorkout item, final rvListener listener) {
+            workoutName.setText(item.getNama());
+            waktu.setText(item.getWaktu_workout()+" minutes");
+            totkalori.setText(String.valueOf(item.getKalori() * item.getWaktu_workout()));
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -67,6 +68,6 @@ public class LogFoodRvAdapter extends RecyclerView.Adapter<LogFoodRvAdapter.View
     }
 
     public interface rvListener {
-        void onItemClick(LogFood food);
+        void onItemClick(LogWorkout workout);
     }
 }

@@ -5,4 +5,10 @@
         <item name="windowNoTitle">true</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
+
+    <style name="FullScreenDialogTheme" parent="Base.Theme.MaterialComponents.Light.DialogWhenLarge">
+        <item name="android:statusBarColor">@color/colorPrimary</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowAnimationStyle">@style/Animation.AppCompat.Dialog</item>
+    </style>
 </resources>

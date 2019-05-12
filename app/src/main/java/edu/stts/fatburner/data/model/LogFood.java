@@ -1,19 +1,23 @@
 package edu.stts.fatburner.data.model;
 
-public class LogFood {
+import java.io.Serializable;
+
+public class LogFood implements Serializable {
     private int id_log;
     private String nama;
     private String tipe;
     private String tanggal;
-    private int satuan;
+    private int jumlah;
+    private String satuan;
     private int kalori;
     private int berat;
 
-    public LogFood(int id_log, String nama, String tipe, String tanggal, int satuan, int kalori, int berat) {
+    public LogFood(int id_log, String nama, String tipe, String tanggal, int jumlah, String satuan, int kalori, int berat) {
         this.id_log = id_log;
         this.nama = nama;
         this.tipe = tipe;
         this.tanggal = tanggal;
+        this.jumlah = jumlah;
         this.satuan = satuan;
         this.kalori = kalori;
         this.berat = berat;
@@ -51,11 +55,19 @@ public class LogFood {
         this.tanggal = tanggal;
     }
 
-    public int getSatuan() {
+    public int getJumlah() {
+        return jumlah;
+    }
+
+    public void setJumlah(int jumlah) {
+        this.jumlah = jumlah;
+    }
+
+    public String getSatuan() {
         return satuan;
     }
 
-    public void setSatuan(int satuan) {
+    public void setSatuan(String satuan) {
         this.satuan = satuan;
     }
 
