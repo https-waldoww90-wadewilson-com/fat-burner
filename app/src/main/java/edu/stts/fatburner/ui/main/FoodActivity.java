@@ -37,6 +37,7 @@ public class FoodActivity extends AppCompatActivity implements SearchView.OnQuer
     private API mApiInterface;
     private SearchView searchView;
     private SharedPreferences prefs;
+    private SweetAlertDialog pDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +95,13 @@ public class FoodActivity extends AppCompatActivity implements SearchView.OnQuer
     }
 
     private void getFoodsData(String category){
+        //untuk dialog
+        pDialog = new SweetAlertDialog(this,SweetAlertDialog.PROGRESS_TYPE);
+        pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+        pDialog.setTitleText("Loading");
+        pDialog.setCancelable(false);
+        pDialog.show();
+
         String token = prefs.getString("token","");
         Call<List<Food>> foodCall = mApiInterface.getFoods(token,category);
         foodCall.enqueue(new Callback<List<Food>>() {
@@ -105,11 +113,13 @@ public class FoodActivity extends AppCompatActivity implements SearchView.OnQuer
                     listFoods.addAll(response);
                 }
                 rvAdapter.notifyDataSetChanged();
+                pDialog.dismissWithAnimation();
             }
 
             @Override
             public void onFailure(Call<List<Food>> call, Throwable t) {
                 Toast.makeText(FoodActivity.this,t.getMessage(), Toast.LENGTH_LONG).show();
+                pDialog.dismissWithAnimation();
             }
         });
     }

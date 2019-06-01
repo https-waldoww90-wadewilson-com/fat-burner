@@ -2,6 +2,7 @@ package edu.stts.fatburner.ui.dialog;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -17,6 +18,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import edu.stts.fatburner.R;
 import edu.stts.fatburner.data.model.Food;
 import edu.stts.fatburner.data.network.API;
@@ -37,6 +39,7 @@ public class ChooseFoodDialog extends DialogFragment implements View.OnClickList
     private SharedPreferences sp;
     private API mApiInterface;
     public Callback callback;
+    private SweetAlertDialog pDialog;
 
     public static ChooseFoodDialog newInstance(Food data,String type){
         ChooseFoodDialog instance = new ChooseFoodDialog();
@@ -114,6 +117,13 @@ public class ChooseFoodDialog extends DialogFragment implements View.OnClickList
     }
 
     private void saveLogFood(int jumlah){
+        //untuk dialog
+        pDialog = new SweetAlertDialog(requireContext(),SweetAlertDialog.PROGRESS_TYPE);
+        pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+        pDialog.setTitleText("Loading");
+        pDialog.setCancelable(false);
+        pDialog.show();
+
         //ambil id user
         int userid = sp.getInt("userID",-1);
         String token = sp.getString("token","");
@@ -128,11 +138,13 @@ public class ChooseFoodDialog extends DialogFragment implements View.OnClickList
                     dismiss();
                 }
                 else Toast.makeText(requireContext(),response.getMessage(), Toast.LENGTH_LONG).show();
+                pDialog.dismissWithAnimation();
             }
 
             @Override
             public void onFailure(Call<InsertResponse> call, Throwable t) {
                 Toast.makeText(requireContext(),t.getMessage(),Toast.LENGTH_LONG).show();
+                pDialog.dismissWithAnimation();
             }
         });
     }

@@ -2,6 +2,7 @@ package edu.stts.fatburner.ui.dialog;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -17,6 +18,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import edu.stts.fatburner.R;
 import edu.stts.fatburner.data.model.LogFood;
 import edu.stts.fatburner.data.network.API;
@@ -27,7 +29,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class EditFoodDialog extends DialogFragment implements View.OnClickListener {
+public class EditFoodDialog extends DialogFragment{
     private LogFood logFood;
     public Callback callback;
     private TextView tvFoodName,tvSatuan,tvKalori;
@@ -36,6 +38,7 @@ public class EditFoodDialog extends DialogFragment implements View.OnClickListen
     private ImageButton btnClose;
     private API mApiInterface;
     private SharedPreferences prefs;
+    private SweetAlertDialog pDialog;
 
     public static EditFoodDialog newInstance(LogFood data){
         EditFoodDialog instance = new EditFoodDialog();
@@ -60,9 +63,26 @@ public class EditFoodDialog extends DialogFragment implements View.OnClickListen
         btnUpdate = v.findViewById(R.id.dialog_editfood_update);
         btnClose = v.findViewById(R.id.dialog_editfood_close);
         btnDelete = v.findViewById(R.id.dialog_editfood_delete);
-        btnUpdate.setOnClickListener(this);
-        btnClose.setOnClickListener(this);
-        btnDelete.setOnClickListener(this);
+        btnUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!etJumlah.getText().toString().equals("") && !etJumlah.getText().toString().equals("0")){
+                    updateLogFood(Integer.parseInt(etJumlah.getText().toString()));
+                }else Toast.makeText(requireContext(),"Field size must not be empty!",Toast.LENGTH_LONG).show();
+            }
+        });
+        btnClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+            }
+        });
+        btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteLogFood();
+            }
+        });
         mApiInterface = ApiClient.getClient().create(API.class);
         //listener buat edit text jika ada pergantian input
         etJumlah.addTextChangedListener(new TextWatcher() {
@@ -100,23 +120,14 @@ public class EditFoodDialog extends DialogFragment implements View.OnClickListen
         getDialog().getWindow().setLayout(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
     }
 
-    @Override
-    public void onClick(View v) {
-        int id = v.getId();
-        if(id == R.id.dialog_editworkout_close){
-            Toast.makeText(requireContext(),"dismiss",Toast.LENGTH_LONG).show();
-            dismiss();
-        }else if(id == R.id.dialog_editworkout_update){
-            if(!etJumlah.getText().toString().equals("") && !etJumlah.getText().toString().equals("0")){
-                Toast.makeText(requireContext(),"msk",Toast.LENGTH_LONG).show();
-                updateLogFood(Integer.parseInt(etJumlah.getText().toString()));
-            }else Toast.makeText(requireContext(),"Field size must not be empty!",Toast.LENGTH_LONG).show();
-        }else if(id == R.id.dialog_editworkout_delete){
-            deleteLogFood();
-        }
-    }
-
     private void updateLogFood(int jumlah){
+        //untuk dialog
+        pDialog = new SweetAlertDialog(requireContext(),SweetAlertDialog.PROGRESS_TYPE);
+        pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+        pDialog.setTitleText("Loading");
+        pDialog.setCancelable(false);
+        pDialog.show();
+
         UpdateLogFoodBody body = new UpdateLogFoodBody(jumlah);
         String token = prefs.getString("token","");
         Call<InsertResponse> saveCall = mApiInterface.updateLogFood(token,logFood.getId_log(),body);
@@ -129,16 +140,25 @@ public class EditFoodDialog extends DialogFragment implements View.OnClickListen
                     callback.perform(true);
                     dismiss();
                 }
+                pDialog.dismissWithAnimation();
             }
 
             @Override
             public void onFailure(Call<InsertResponse> call, Throwable t) {
                 Toast.makeText(requireContext(),t.getMessage(), Toast.LENGTH_LONG).show();
+                pDialog.dismissWithAnimation();
             }
         });
     }
 
     private void deleteLogFood(){
+        //untuk dialog
+        pDialog = new SweetAlertDialog(requireContext(),SweetAlertDialog.PROGRESS_TYPE);
+        pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+        pDialog.setTitleText("Loading");
+        pDialog.setCancelable(false);
+        pDialog.show();
+
         String token = prefs.getString("token","");
         Call<InsertResponse> deleteCall = mApiInterface.deleteLogFood(token,logFood.getId_log());
         deleteCall.enqueue(new retrofit2.Callback<InsertResponse>() {
@@ -150,11 +170,13 @@ public class EditFoodDialog extends DialogFragment implements View.OnClickListen
                     callback.perform(true);
                     dismiss();
                 }
+                pDialog.dismissWithAnimation();
             }
 
             @Override
             public void onFailure(Call<InsertResponse> call, Throwable t) {
                 Toast.makeText(requireContext(),t.getMessage(), Toast.LENGTH_LONG).show();
+                pDialog.dismissWithAnimation();
             }
         });
     }

@@ -2,6 +2,7 @@ package edu.stts.fatburner.ui.dialog;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import edu.stts.fatburner.R;
 import edu.stts.fatburner.adapter.FoodCategoryRvAdapter;
 import edu.stts.fatburner.data.model.FoodCategory;
@@ -35,6 +37,7 @@ public class FoodCategoryDialog extends DialogFragment implements View.OnClickLi
     private FoodCategoryRvAdapter rvAdapter;
     private List<FoodCategory> listCategory;
     private SharedPreferences prefs;
+    private SweetAlertDialog pDialog;
 
     public static FoodCategoryDialog newInstance(){
         return new FoodCategoryDialog();
@@ -83,6 +86,13 @@ public class FoodCategoryDialog extends DialogFragment implements View.OnClickLi
     }
 
     private void loadFoodCategory(){
+        //untuk dialog
+        pDialog = new SweetAlertDialog(requireContext(),SweetAlertDialog.PROGRESS_TYPE);
+        pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+        pDialog.setTitleText("Loading");
+        pDialog.setCancelable(false);
+        pDialog.show();
+
         String token = prefs.getString("token","");
         Call<List<FoodCategory>> foodCall = mApiInterface.getFoodCategory(token);
         foodCall.enqueue(new retrofit2.Callback<List<FoodCategory>>() {
@@ -94,11 +104,13 @@ public class FoodCategoryDialog extends DialogFragment implements View.OnClickLi
                     listCategory.addAll(response);
                 }
                 rvAdapter.notifyDataSetChanged();
+                pDialog.dismissWithAnimation();
             }
 
             @Override
             public void onFailure(Call<List<FoodCategory>> call, Throwable t) {
                 Toast.makeText(requireContext(),t.getMessage(),Toast.LENGTH_LONG).show();
+                pDialog.dismissWithAnimation();
             }
         });
     }

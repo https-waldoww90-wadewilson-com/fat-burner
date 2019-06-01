@@ -2,6 +2,7 @@ package edu.stts.fatburner.ui.dialog;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -17,6 +18,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import edu.stts.fatburner.R;
 import edu.stts.fatburner.data.model.LogFood;
 import edu.stts.fatburner.data.model.LogWorkout;
@@ -37,6 +39,7 @@ public class EditWorkoutDialog extends DialogFragment implements View.OnClickLis
     private ImageButton btnClose;
     private API mApiInterface;
     private SharedPreferences prefs;
+    private SweetAlertDialog pDialog;
 
     public static EditWorkoutDialog newInstance(LogWorkout data){
         EditWorkoutDialog instance = new EditWorkoutDialog();
@@ -116,6 +119,13 @@ public class EditWorkoutDialog extends DialogFragment implements View.OnClickLis
     }
 
     private void updateLogWorkout(int waktu){
+        //untuk dialog
+        pDialog = new SweetAlertDialog(requireContext(),SweetAlertDialog.PROGRESS_TYPE);
+        pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+        pDialog.setTitleText("Loading");
+        pDialog.setCancelable(false);
+        pDialog.show();
+
         String token = prefs.getString("token","");
         UpdateLogWorkoutBody body = new UpdateLogWorkoutBody(waktu);
         Call<InsertResponse> saveCall = mApiInterface.updateLogWorkout(token,logWorkout.getId_log(),body);
@@ -128,16 +138,25 @@ public class EditWorkoutDialog extends DialogFragment implements View.OnClickLis
                     callback.perform(true);
                     dismiss();
                 }
+                pDialog.dismissWithAnimation();
             }
 
             @Override
             public void onFailure(Call<InsertResponse> call, Throwable t) {
                 Toast.makeText(requireContext(),t.getMessage(), Toast.LENGTH_LONG).show();
+                pDialog.dismissWithAnimation();
             }
         });
     }
 
     private void deleteLogWorkout(){
+        //untuk dialog
+        pDialog = new SweetAlertDialog(requireContext(),SweetAlertDialog.PROGRESS_TYPE);
+        pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+        pDialog.setTitleText("Loading");
+        pDialog.setCancelable(false);
+        pDialog.show();
+
         String token = prefs.getString("token","");
         Call<InsertResponse> deleteCall = mApiInterface.deleteLogWorkout(token,logWorkout.getId_log());
         deleteCall.enqueue(new retrofit2.Callback<InsertResponse>() {
@@ -149,11 +168,13 @@ public class EditWorkoutDialog extends DialogFragment implements View.OnClickLis
                     callback.perform(true);
                     dismiss();
                 }
+                pDialog.dismissWithAnimation();
             }
 
             @Override
             public void onFailure(Call<InsertResponse> call, Throwable t) {
                 Toast.makeText(requireContext(),t.getMessage(), Toast.LENGTH_LONG).show();
+                pDialog.dismissWithAnimation();
             }
         });
     }

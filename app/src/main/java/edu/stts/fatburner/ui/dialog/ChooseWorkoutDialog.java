@@ -2,6 +2,7 @@ package edu.stts.fatburner.ui.dialog;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -17,6 +18,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import edu.stts.fatburner.R;
 import edu.stts.fatburner.data.model.Food;
 import edu.stts.fatburner.data.model.Workout;
@@ -39,6 +41,7 @@ public class ChooseWorkoutDialog extends DialogFragment implements View.OnClickL
     private SharedPreferences sp;
     private API mApiInterface;
     public Callback callback;
+    private SweetAlertDialog pDialog;
 
     public static ChooseWorkoutDialog newInstance(Workout data){
         ChooseWorkoutDialog instance = new ChooseWorkoutDialog();
@@ -115,6 +118,13 @@ public class ChooseWorkoutDialog extends DialogFragment implements View.OnClickL
     }
 
     private void saveLogWorkout(int waktu){
+        //untuk dialog
+        pDialog = new SweetAlertDialog(requireContext(),SweetAlertDialog.PROGRESS_TYPE);
+        pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+        pDialog.setTitleText("Loading");
+        pDialog.setCancelable(false);
+        pDialog.show();
+
         //ambil id user
         int userid = sp.getInt("userID",-1);
         String token = sp.getString("token","");
@@ -129,11 +139,13 @@ public class ChooseWorkoutDialog extends DialogFragment implements View.OnClickL
                     dismiss();
                 }
                 else Toast.makeText(requireContext(),response.getMessage(), Toast.LENGTH_LONG).show();
+                pDialog.dismissWithAnimation();
             }
 
             @Override
             public void onFailure(Call<InsertResponse> call, Throwable t) {
                 Toast.makeText(requireContext(),t.getMessage(), Toast.LENGTH_LONG).show();
+                pDialog.dismissWithAnimation();
             }
         });
     }
