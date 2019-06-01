@@ -35,6 +35,7 @@ public class EditFoodDialog extends DialogFragment implements View.OnClickListen
     private Button btnUpdate,btnDelete;
     private ImageButton btnClose;
     private API mApiInterface;
+    private SharedPreferences prefs;
 
     public static EditFoodDialog newInstance(LogFood data){
         EditFoodDialog instance = new EditFoodDialog();
@@ -84,6 +85,7 @@ public class EditFoodDialog extends DialogFragment implements View.OnClickListen
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        prefs = getActivity().getSharedPreferences("FatBurnerPrefs",Context.MODE_PRIVATE);
         logFood = (LogFood) getArguments().getSerializable("food_data");
         etJumlah.setText(logFood.getJumlah()+"");
         etJumlah.setSelection(etJumlah.getText().length());
@@ -93,12 +95,20 @@ public class EditFoodDialog extends DialogFragment implements View.OnClickListen
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        getDialog().getWindow().setLayout(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+    }
+
+    @Override
     public void onClick(View v) {
         int id = v.getId();
         if(id == R.id.dialog_editworkout_close){
+            Toast.makeText(requireContext(),"dismiss",Toast.LENGTH_LONG).show();
             dismiss();
         }else if(id == R.id.dialog_editworkout_update){
             if(!etJumlah.getText().toString().equals("") && !etJumlah.getText().toString().equals("0")){
+                Toast.makeText(requireContext(),"msk",Toast.LENGTH_LONG).show();
                 updateLogFood(Integer.parseInt(etJumlah.getText().toString()));
             }else Toast.makeText(requireContext(),"Field size must not be empty!",Toast.LENGTH_LONG).show();
         }else if(id == R.id.dialog_editworkout_delete){
@@ -108,7 +118,8 @@ public class EditFoodDialog extends DialogFragment implements View.OnClickListen
 
     private void updateLogFood(int jumlah){
         UpdateLogFoodBody body = new UpdateLogFoodBody(jumlah);
-        Call<InsertResponse> saveCall = mApiInterface.updateLogFood(logFood.getId_log(),body);
+        String token = prefs.getString("token","");
+        Call<InsertResponse> saveCall = mApiInterface.updateLogFood(token,logFood.getId_log(),body);
         saveCall.enqueue(new retrofit2.Callback<InsertResponse>() {
             @Override
             public void onResponse(Call<InsertResponse> call, Response<InsertResponse> res) {
@@ -128,7 +139,8 @@ public class EditFoodDialog extends DialogFragment implements View.OnClickListen
     }
 
     private void deleteLogFood(){
-        Call<InsertResponse> deleteCall = mApiInterface.deleteLogFood(logFood.getId_log());
+        String token = prefs.getString("token","");
+        Call<InsertResponse> deleteCall = mApiInterface.deleteLogFood(token,logFood.getId_log());
         deleteCall.enqueue(new retrofit2.Callback<InsertResponse>() {
             @Override
             public void onResponse(Call<InsertResponse> call, Response<InsertResponse> res) {

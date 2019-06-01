@@ -1,5 +1,7 @@
 package edu.stts.fatburner.ui.dialog;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -34,6 +36,7 @@ public class EditWorkoutDialog extends DialogFragment implements View.OnClickLis
     private Button btnUpdate,btnDelete;
     private ImageButton btnClose;
     private API mApiInterface;
+    private SharedPreferences prefs;
 
     public static EditWorkoutDialog newInstance(LogWorkout data){
         EditWorkoutDialog instance = new EditWorkoutDialog();
@@ -89,6 +92,7 @@ public class EditWorkoutDialog extends DialogFragment implements View.OnClickLis
         tvName.setText(logWorkout.getNama()+"");
         tvSatuan.setText("minutes");
         tvKalori.setText(logWorkout.getKalori() * logWorkout.getWaktu_workout() +"");
+        prefs = getActivity().getSharedPreferences("FatBurnerPrefs",Context.MODE_PRIVATE);
     }
 
     @Override
@@ -105,9 +109,16 @@ public class EditWorkoutDialog extends DialogFragment implements View.OnClickLis
         }
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        getDialog().getWindow().setLayout(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+    }
+
     private void updateLogWorkout(int waktu){
+        String token = prefs.getString("token","");
         UpdateLogWorkoutBody body = new UpdateLogWorkoutBody(waktu);
-        Call<InsertResponse> saveCall = mApiInterface.updateLogWorkout(logWorkout.getId_log(),body);
+        Call<InsertResponse> saveCall = mApiInterface.updateLogWorkout(token,logWorkout.getId_log(),body);
         saveCall.enqueue(new retrofit2.Callback<InsertResponse>() {
             @Override
             public void onResponse(Call<InsertResponse> call, Response<InsertResponse> res) {
@@ -127,7 +138,8 @@ public class EditWorkoutDialog extends DialogFragment implements View.OnClickLis
     }
 
     private void deleteLogWorkout(){
-        Call<InsertResponse> deleteCall = mApiInterface.deleteLogWorkout(logWorkout.getId_log());
+        String token = prefs.getString("token","");
+        Call<InsertResponse> deleteCall = mApiInterface.deleteLogWorkout(token,logWorkout.getId_log());
         deleteCall.enqueue(new retrofit2.Callback<InsertResponse>() {
             @Override
             public void onResponse(Call<InsertResponse> call, Response<InsertResponse> res) {

@@ -1,5 +1,7 @@
 package edu.stts.fatburner.ui.dialog;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -32,6 +34,7 @@ public class FoodCategoryDialog extends DialogFragment implements View.OnClickLi
     private ImageButton btnClose;
     private FoodCategoryRvAdapter rvAdapter;
     private List<FoodCategory> listCategory;
+    private SharedPreferences prefs;
 
     public static FoodCategoryDialog newInstance(){
         return new FoodCategoryDialog();
@@ -60,6 +63,7 @@ public class FoodCategoryDialog extends DialogFragment implements View.OnClickLi
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         listCategory = new ArrayList<>();
+        prefs = getActivity().getSharedPreferences("FatBurnerPrefs",Context.MODE_PRIVATE);
         btnClose.setOnClickListener(this);
         //initialization retrofit
         mApiInterface = ApiClient.getClient().create(API.class);
@@ -79,7 +83,8 @@ public class FoodCategoryDialog extends DialogFragment implements View.OnClickLi
     }
 
     private void loadFoodCategory(){
-        Call<List<FoodCategory>> foodCall = mApiInterface.getFoodCategory();
+        String token = prefs.getString("token","");
+        Call<List<FoodCategory>> foodCall = mApiInterface.getFoodCategory(token);
         foodCall.enqueue(new retrofit2.Callback<List<FoodCategory>>() {
             @Override
             public void onResponse(Call<List<FoodCategory>> call, Response<List<FoodCategory>> res) {

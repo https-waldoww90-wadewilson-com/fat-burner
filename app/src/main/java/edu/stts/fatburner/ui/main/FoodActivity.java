@@ -1,7 +1,9 @@
 package edu.stts.fatburner.ui.main;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -34,6 +36,7 @@ public class FoodActivity extends AppCompatActivity implements SearchView.OnQuer
     private List<Food> listFoods;
     private API mApiInterface;
     private SearchView searchView;
+    private SharedPreferences prefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +44,7 @@ public class FoodActivity extends AppCompatActivity implements SearchView.OnQuer
         setContentView(R.layout.activity_food);
         rvFood = findViewById(R.id.rv_food);
         listFoods = new ArrayList<>();
+        prefs = getApplicationContext().getSharedPreferences("FatBurnerPrefs",Context.MODE_PRIVATE);
         //untuk back button
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -78,8 +82,6 @@ public class FoodActivity extends AppCompatActivity implements SearchView.OnQuer
         rvFood.setLayoutManager(lm);
         rvFood.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         rvFood.setAdapter(rvAdapter);
-
-
     }
 
     @Override
@@ -92,7 +94,8 @@ public class FoodActivity extends AppCompatActivity implements SearchView.OnQuer
     }
 
     private void getFoodsData(String category){
-        Call<List<Food>> foodCall = mApiInterface.getFoods(category);
+        String token = prefs.getString("token","");
+        Call<List<Food>> foodCall = mApiInterface.getFoods(token,category);
         foodCall.enqueue(new Callback<List<Food>>() {
             @Override
             public void onResponse(Call<List<Food>> call, Response<List<Food>> res) {

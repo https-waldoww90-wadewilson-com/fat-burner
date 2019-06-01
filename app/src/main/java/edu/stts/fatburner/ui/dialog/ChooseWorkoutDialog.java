@@ -117,8 +117,9 @@ public class ChooseWorkoutDialog extends DialogFragment implements View.OnClickL
     private void saveLogWorkout(int waktu){
         //ambil id user
         int userid = sp.getInt("userID",-1);
+        String token = sp.getString("token","");
         LogWorkoutBody body = new LogWorkoutBody(userid,Integer.parseInt(chosenWorkout.getId()+""),waktu);
-        Call<InsertResponse> saveCall = mApiInterface.saveLogWorkout(body);
+        Call<InsertResponse> saveCall = mApiInterface.saveLogWorkout(token,body);
         saveCall.enqueue(new retrofit2.Callback<InsertResponse>() {
             @Override
             public void onResponse(Call<InsertResponse> call, Response<InsertResponse> res) {

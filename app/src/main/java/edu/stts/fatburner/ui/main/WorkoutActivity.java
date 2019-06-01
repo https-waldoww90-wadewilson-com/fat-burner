@@ -1,7 +1,9 @@
 package edu.stts.fatburner.ui.main;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
@@ -36,6 +38,7 @@ public class WorkoutActivity extends AppCompatActivity implements SearchView.OnQ
     private List<Workout> listWorkout;
     private API mApiInterface;
     private SearchView searchView;
+    private SharedPreferences prefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +46,7 @@ public class WorkoutActivity extends AppCompatActivity implements SearchView.OnQ
         setContentView(R.layout.activity_workout);
         rvWorkout = findViewById(R.id.rv_workoutactivity);
         listWorkout = new ArrayList<>();
-        //untuk back button
+        prefs= getApplicationContext().getSharedPreferences("FatBurnerPrefs",Context.MODE_PRIVATE);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //untuk judul activity
@@ -86,7 +89,8 @@ public class WorkoutActivity extends AppCompatActivity implements SearchView.OnQ
     }
 
     private void getWorkoutData(){
-        Call<List<Workout>> workoutCall = mApiInterface.getWorkouts();
+        String token = prefs.getString("token","");
+        Call<List<Workout>> workoutCall = mApiInterface.getWorkouts(token);
         workoutCall.enqueue(new Callback<List<Workout>>() {
             @Override
             public void onResponse(Call<List<Workout>> call, Response<List<Workout>> res) {

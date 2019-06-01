@@ -116,8 +116,9 @@ public class ChooseFoodDialog extends DialogFragment implements View.OnClickList
     private void saveLogFood(int jumlah){
         //ambil id user
         int userid = sp.getInt("userID",-1);
+        String token = sp.getString("token","");
         LogFoodBody body = new LogFoodBody(userid,Integer.parseInt(chosenFood.getId()),type,jumlah);
-        Call<InsertResponse> saveCall = mApiInterface.saveLogFood(body);
+        Call<InsertResponse> saveCall = mApiInterface.saveLogFood(token,body);
         saveCall.enqueue(new retrofit2.Callback<InsertResponse>() {
             @Override
             public void onResponse(Call<InsertResponse> call, Response<InsertResponse> res) {

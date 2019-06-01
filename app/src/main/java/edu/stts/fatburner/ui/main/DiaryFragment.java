@@ -103,6 +103,7 @@ public class DiaryFragment extends Fragment implements View.OnClickListener{
         listDinner = new ArrayList<>();
         listSnack = new ArrayList<>();
         listWorkout = new ArrayList<>();
+
         //rv breakfast
         breakfastAdapter = new LogFoodRvAdapter(requireContext(), listBreakfast, new LogFoodRvAdapter.rvListener() {
             @Override
@@ -218,7 +219,8 @@ public class DiaryFragment extends Fragment implements View.OnClickListener{
 
     private void loadLogFoodUser(){
         int userid = pref.getInt("userID",-1);
-        Call<List<LogFood>> loadCall = mApiInterface.getLogFood(userid,"date");
+        String token = pref.getString("token","");
+        Call<List<LogFood>> loadCall = mApiInterface.getLogFood(token,userid,"date");
         loadCall.enqueue(new Callback<List<LogFood>>() {
             @Override
             public void onResponse(Call<List<LogFood>> call, Response<List<LogFood>> res) {
@@ -235,7 +237,8 @@ public class DiaryFragment extends Fragment implements View.OnClickListener{
 
     private void loadLogWorkoutUser(){
         int userid = pref.getInt("userID",-1);
-        Call<List<LogWorkout>> loadCall = mApiInterface.getLogWorkout(userid,"date");
+        String token = pref.getString("token","");
+        Call<List<LogWorkout>> loadCall = mApiInterface.getLogWorkout(token,userid,"date");
         loadCall.enqueue(new Callback<List<LogWorkout>>() {
             @Override
             public void onResponse(Call<List<LogWorkout>> call, Response<List<LogWorkout>> res) {

@@ -1,6 +1,10 @@
 package edu.stts.fatburner.ui.main;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -31,6 +35,7 @@ public class HomeFragment extends Fragment {
     private List<Article> listArticle;
     private API mApiInterface;
     private SwipeRefreshLayout refresh;
+    private SharedPreferences pref;
 
     public HomeFragment() {
 
@@ -42,13 +47,19 @@ public class HomeFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_home, container, false);
         rview = v.findViewById(R.id.rview_article);
         refresh = v.findViewById(R.id.srl_home);
+        return v;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        pref = getActivity().getSharedPreferences("FatBurnerPrefs",Context.MODE_PRIVATE);
         mApiInterface = ApiClient.getClient().create(API.class);
         listArticle = new ArrayList<>();
         //Recyclerview untuk artikel
         adapt = new ArticleAdapter(requireContext(),listArticle);
         rview.setLayoutManager(new LinearLayoutManager(requireContext()));
         rview.setAdapter(adapt);
-        getArticlesData();
         //Buat load ulang artikel
         refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -56,12 +67,13 @@ public class HomeFragment extends Fragment {
                 getArticlesData();
             }
         });
-        return v;
+        getArticlesData();
     }
 
     private void getArticlesData(){
         refresh.setRefreshing(true);
-        Call<List<Article>> articleCall = mApiInterface.getArticles();
+        String token = pref.getString("token","");
+        Call<List<Article>> articleCall = mApiInterface.getArticles(token);
         articleCall.enqueue(new Callback<List<Article>>() {
             @Override
             public void onResponse(Call<List<Article>> call, Response<List<Article>> res) {

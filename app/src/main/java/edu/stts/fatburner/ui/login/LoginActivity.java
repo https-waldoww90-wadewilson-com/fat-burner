@@ -80,7 +80,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 pLoadingDialog.dismissWithAnimation();
                 LoginResponse response = res.body();
                 if(!response.isError()){
-                    saveUserLoginID(Integer.parseInt(response.getMessage()));
+                    saveIdToken(Integer.parseInt(response.getMessage().getUserid()),response.getMessage().getToken());
                     startActivity(new Intent(LoginActivity.this,MainActivity.class));
                     finish();
                 }
@@ -95,9 +95,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         });
     }
 
-    private void saveUserLoginID(int id){
+    private void saveIdToken(int id,String token){
         SharedPreferences.Editor editor = pref.edit();
         editor.putInt("userID",id);
+        editor.putString("token","Bearer "+token);
         editor.apply();
     }
 
