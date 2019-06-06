@@ -2,17 +2,19 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="edu.stts.fatburner">
-    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
         android:icon="@drawable/logo"
-        android:usesCleartextTraffic="true"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true"
         tools:replace="android:icon">
+        <activity android:name=".ui.register.CalorieActivity"></activity>
         <activity android:name=".ui.register.EndRegisterActivity" />
         <activity android:name=".ui.register.SugarActivity" />
         <activity android:name=".ui.register.CholesterolActivity" />
@@ -35,8 +37,8 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".ui.main.FoodActivity" />
-        <activity android:name=".ui.main.GraphicActivity"></activity>
-        <activity android:name=".ui.main.WorkoutActivity"></activity>
+        <activity android:name=".ui.main.GraphicActivity" />
+        <activity android:name=".ui.main.WorkoutActivity" />
     </application>
 
 </manifest>

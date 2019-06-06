@@ -12,6 +12,7 @@ public class User implements Serializable {
     private double height;
     private double bloodsugar;
     private double cholesterol;
+    private double calorie;
 
     public User(){
 
@@ -88,4 +89,8 @@ public class User implements Serializable {
     public void setCholesterol(double cholesterol) {
         this.cholesterol = cholesterol;
     }
+
+    public double getCalorie() { return calorie; }
+
+    public void setCalorie(double calorie) { this.calorie = calorie; }
 }
