@@ -50,7 +50,7 @@ public interface API {
     @GET("api/food")
     Call<List<FoodCategory>> getFoodCategory(@Header("Authorization") String token);
 
-    @GET("api/articles")
+    @GET("api/articles/")
     Call<List<Article>> getArticles(@Header("Authorization") String token);
 
     @GET("api/workouts")
