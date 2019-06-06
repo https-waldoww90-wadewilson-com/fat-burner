@@ -60,7 +60,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
-    private void doLogin(String email,String password){
+    private void doLogin(final String email, String password){
         //untuk loading dialog
         pLoadingDialog = new SweetAlertDialog(this,SweetAlertDialog.PROGRESS_TYPE);
         pLoadingDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
@@ -80,7 +80,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 pLoadingDialog.dismissWithAnimation();
                 LoginResponse response = res.body();
                 if(!response.isError()){
-                    saveIdToken(Integer.parseInt(response.getMessage().getUserid()),response.getMessage().getToken());
+                    saveIdToken(Integer.parseInt(response.getMessage().getUserid()),response.getMessage().getToken(),response.getMessage().getWeight(),email);
                     startActivity(new Intent(LoginActivity.this,MainActivity.class));
                     finish();
                 }
@@ -95,10 +95,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         });
     }
 
-    private void saveIdToken(int id,String token){
+    private void saveIdToken(int id,String token,float weight,String email){
         SharedPreferences.Editor editor = pref.edit();
         editor.putInt("userID",id);
         editor.putString("token","Bearer "+token);
+        editor.putFloat("weight",weight);
+        editor.putString("email",email);
         editor.apply();
     }
 

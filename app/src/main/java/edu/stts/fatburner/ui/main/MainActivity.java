@@ -17,14 +17,18 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import edu.stts.fatburner.R;
 import edu.stts.fatburner.data.model.Food;
+import edu.stts.fatburner.ui.login.LoginActivity;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private BottomNavigationView bottomNav;
+    private SharedPreferences pref;
     public static final int CODE_INFOFOOD = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +46,12 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        pref = getSharedPreferences("FatBurnerPrefs",Context.MODE_PRIVATE);
+
+        View header = navigationView.getHeaderView(0);
+        TextView email = (TextView) header.findViewById(R.id.header_email);
+        email.setText(pref.getString("email",""));
 
         //Untuk bottom navigation
         bottomNav = findViewById(R.id.main_bnav);
@@ -125,6 +135,9 @@ public class MainActivity extends AppCompatActivity
             loadFragment(new ReportsFragment());
         } else if (id == R.id.nav_settings) {
 
+        }else if(id == R.id.nav_logout){
+            startActivity(new Intent(MainActivity.this,LoginActivity.class));
+            finish();
         }
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

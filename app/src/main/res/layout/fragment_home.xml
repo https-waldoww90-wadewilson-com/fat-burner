@@ -22,7 +22,7 @@
                 android:layout_margin="5dp"
                 card_view:cardCornerRadius="4dp">
 
-                <android.support.constraint.ConstraintLayout
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
@@ -44,98 +44,110 @@
                         card_view:srcCompat="@drawable/ava"
                         tools:src="@tools:sample/avatars" />
 
-                    <TextView
-                        android:id="@+id/textView3"
-                        android:layout_width="86dp"
-                        android:layout_height="25dp"
-                        android:layout_alignTop="@+id/imageView2"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginTop="8dp"
-                        android:drawableLeft="@drawable/ic_diary"
-                        android:gravity="center_vertical|center_horizontal"
-                        android:text="1725 cal"
-                        card_view:layout_constraintStart_toEndOf="@+id/imageView2"
-                        card_view:layout_constraintTop_toTopOf="parent" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:layout_toRightOf="@+id/imageView2">
 
-                    <TextView
-                        android:id="@+id/textView4"
-                        android:layout_width="91dp"
-                        android:layout_height="25dp"
-                        android:layout_alignTop="@+id/imageView2"
-                        android:layout_alignParentStart="true"
-                        android:layout_alignParentLeft="true"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginRight="8dp"
-                        android:drawableLeft="@drawable/ic_weight"
-                        android:gravity="center_vertical|center_horizontal"
-                        android:text="1836 cal"
-                        card_view:layout_constraintEnd_toEndOf="parent"
-                        card_view:layout_constraintStart_toEndOf="@+id/textView3"
-                        card_view:layout_constraintTop_toTopOf="parent" />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:padding="5dp"
+                            android:gravity="center_horizontal"
+                            android:weightSum="2">
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:gravity="center_horizontal"
+                                android:padding="2dp"
+                                android:layout_marginRight="10dp"
+                                android:background="@drawable/linear_layout_round_corner">
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginRight="5dp"
+                                    android:src="@drawable/ic_diary" />
+                                <TextView
+                                    android:id="@+id/textView3"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity=""
+                                    android:layout_gravity="center_vertical"
+                                    android:text="0 cal" />
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:gravity="center_horizontal"
+                                android:padding="2dp"
+                                android:background="@drawable/linear_layout_round_corner">
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginRight="5dp"
+                                    android:src="@drawable/ic_run" />
+                                <TextView
+                                    android:id="@+id/textView4"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:text="0 cal" />
+                            </LinearLayout>
+                        </LinearLayout>
 
-                    <TextView
-                        android:id="@+id/textView2"
-                        android:layout_width="86dp"
-                        android:layout_height="25dp"
-                        android:layout_below="@+id/textView4"
-                        android:layout_alignBaseline="@+id/button"
-                        android:layout_alignParentStart="true"
-                        android:layout_alignParentLeft="true"
-                        android:layout_gravity="center_vertical|center_horizontal"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginBottom="8dp"
-                        android:clickable="false"
-                        android:gravity="center"
-                        android:text="50kg"
-                        android:textIsSelectable="false"
-                        android:textStyle="normal"
-                        card_view:layout_constraintBottom_toBottomOf="parent"
-                        card_view:layout_constraintStart_toEndOf="@+id/imageView2"
-                        card_view:layout_constraintTop_toBottomOf="@+id/textView3" />
-
-                    <Button
-                        android:id="@+id/button"
-                        android:layout_width="43dp"
-                        android:layout_height="25dp"
-                        android:layout_alignStart="@+id/textView4"
-                        android:layout_alignLeft="@+id/textView4"
-                        android:layout_alignBottom="@+id/imageView2"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginBottom="8dp"
-                        android:background="@color/colorLightGray"
-                        android:drawableLeft="@drawable/ic_menu_camera"
-                        android:paddingLeft="9dp"
-                        android:textSize="8sp"
-                        card_view:layout_constraintBottom_toBottomOf="parent"
-                        card_view:layout_constraintStart_toStartOf="@+id/textView4"
-                        card_view:layout_constraintTop_toBottomOf="@+id/textView4"
-                        card_view:layout_constraintVertical_bias="1.0" />
-
-                    <Button
-                        android:id="@+id/btArtikel"
-                        android:layout_width="43dp"
-                        android:layout_height="25dp"
-                        android:layout_alignTop="@+id/button"
-                        android:layout_gravity="center_vertical|end"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginBottom="8dp"
-                        android:layout_toEndOf="@+id/button"
-                        android:layout_toRightOf="@+id/button"
-                        android:background="@color/colorLightGray"
-                        android:text="+ NEW"
-                        android:textSize="10sp"
-                        card_view:layout_constraintBottom_toBottomOf="parent"
-                        card_view:layout_constraintEnd_toEndOf="@+id/textView4"
-                        card_view:layout_constraintTop_toBottomOf="@+id/textView4"
-                        card_view:layout_constraintVertical_bias="1.0" />
-
-                </android.support.constraint.ConstraintLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:padding="5dp"
+                            android:gravity="center_horizontal"
+                            android:weightSum="2">
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:gravity="center_horizontal"
+                                android:padding="2dp"
+                                android:layout_marginRight="10dp"
+                                android:background="@drawable/linear_layout_round_corner">
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginRight="5dp"
+                                    android:src="@drawable/ic_weight" />
+                                <TextView
+                                    android:id="@+id/textView2"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity=""
+                                    android:layout_gravity="center_vertical"
+                                    android:text="0 kg" />
+                            </LinearLayout>
+                            <LinearLayout
+                                android:id="@+id/ll_create_article"
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:gravity="center_horizontal"
+                                android:padding="2dp"
+                                android:background="@drawable/linear_layout_round_corner">
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginRight="5dp"
+                                    android:src="@drawable/ic_create" />
+                            </LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+                </RelativeLayout>
 
             </android.support.v7.widget.CardView>
 

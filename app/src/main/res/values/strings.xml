@@ -12,7 +12,21 @@
     <string name="label_reports">Reports</string>
     <string name="label_mealplans">My Meal Plans</string>
     <string name="label_settings">Settings</string>
+    <string name="label_choose_plan">Choose your plan</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string-array name="time_array">
+        <item>Today</item>
+        <item>This week</item>
+        <item>This year</item>
+    </string-array>
+
+    <string-array name="paket_array">
+        <item>Free</item>
+        <item>Basic</item>
+        <item>Silver</item>
+        <item>Gold</item>
+    </string-array>
 </resources>

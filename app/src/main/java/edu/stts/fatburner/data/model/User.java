@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class User implements Serializable {
     private String email;
-    private String username;
+    private String name;
     private String password;
     private int goal;
     private boolean gender;
@@ -16,17 +16,6 @@ public class User implements Serializable {
     public User(){
 
     }
-    public User(String email, String username, String password, int goal, boolean gender, double weight, double height, double bloodsugar, double cholesterol) {
-        this.email = email;
-        this.username = username;
-        this.password = password;
-        this.goal = goal;
-        this.gender = gender;
-        this.weight = weight;
-        this.height = height;
-        this.bloodsugar = bloodsugar;
-        this.cholesterol = cholesterol;
-    }
 
     public String getEmail() {
         return email;
@@ -36,12 +25,12 @@ public class User implements Serializable {
         this.email = email;
     }
 
-    public String getUsername() {
-        return username;
+    public String getName() {
+        return name;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getPassword() {

@@ -9,6 +9,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+
+import com.jaredrummler.materialspinner.MaterialSpinner;
+
 import edu.stts.fatburner.R;
 import edu.stts.fatburner.data.model.User;
 import edu.stts.fatburner.data.network.API;
@@ -21,9 +24,11 @@ import retrofit2.Response;
 
 public class EndRegisterActivity extends AppCompatActivity {
     private Button btnRegister;
-    private EditText etEmail,etUsername,etPassword,etConfirm;
+    private EditText etEmail,etName,etPassword,etConfirm;
+    private MaterialSpinner spinner;
     private User userBaru;
     private API mApiInterface;
+    private String plan;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,20 +38,49 @@ public class EndRegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_end_register);
         btnRegister = findViewById(R.id.btn_register);
         etEmail = findViewById(R.id.etUsername);
-        etUsername = findViewById(R.id.etUsername2);
+        etName = findViewById(R.id.etName);
         etPassword = findViewById(R.id.etPassword);
         etConfirm = findViewById(R.id.etConfirmPassword);
+        spinner = findViewById(R.id.spinner);
         mApiInterface = ApiClient.getClient().create(API.class);
         userBaru = (User)getIntent().getSerializableExtra("userBaru");
+
+        spinner.setItems("Free", "Basic", "Silver", "Gold");
+        plan = "Free";
+        spinner.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(MaterialSpinner view, int position, long id, Object item) {
+                if(position==0) plan = "Free";
+                else if(position == 1) plan = "Basic";
+                else if(position == 2) plan = "Silver";
+                else if(position == 3) plan = "Gold";
+            }
+        });
     }
 
     public void btnRegister(View v) {
-        if(etPassword.getText().toString().equals(etConfirm.getText().toString())) {
-            userBaru.setEmail(etEmail.getText().toString());
-            userBaru.setUsername(etUsername.getText().toString());
-            userBaru.setPassword(etPassword.getText().toString());
-            doRegister(userBaru);
+        if(!etEmail.getText().toString().isEmpty()&&!etName.getText().toString().isEmpty()&&!etPassword.getText().toString().isEmpty()&&!etConfirm.getText().toString().isEmpty()){
+            boolean allow = true;
+            if(!etPassword.getText().toString().equals(etConfirm.getText().toString())) {
+                allow = false;
+                Toast.makeText(EndRegisterActivity.this,"Password & Confirm Password must be same",Toast.LENGTH_SHORT).show();
+            }
+            if(!checkEmail(etEmail.getText().toString())) allow = false;
+            if(allow){
+                userBaru.setEmail(etEmail.getText().toString());
+                userBaru.setName(etName.getText().toString());
+                userBaru.setPassword(etPassword.getText().toString());
+                doRegister(userBaru);
+            }
+        }else Toast.makeText(EndRegisterActivity.this,"All field must be filled",Toast.LENGTH_SHORT).show();
+    }
+
+    private boolean checkEmail(String email){
+        if (!email.matches("[a-zA-Z0-9._-]+@[a-z]+.[a-z]+")) {
+            Toast.makeText(EndRegisterActivity.this,"Email not valid",Toast.LENGTH_SHORT).show();
+            return false;
         }
+        return true;
     }
 
     private void doRegister(User user){

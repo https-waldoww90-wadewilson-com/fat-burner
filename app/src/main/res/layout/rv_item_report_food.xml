@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="5dp"
+    android:weightSum="3">
+        <TextView
+            android:id="@+id/tv_reportfood_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.8"
+            android:paddingStart="10dp"
+            android:paddingLeft="10dp"
+            android:text="Pizza Hut Pan Pizza Meat Lovers"/>
+        <TextView
+            android:id="@+id/tv_reportfood_jumlah"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.6"
+            android:paddingStart="10dp"
+            android:paddingLeft="10dp"
+            android:textAlignment="textEnd"
+            android:text="x1 ="
+            android:gravity="end"/>
+        <TextView
+            android:id="@+id/tv_reportfood_cal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.6"
+            android:paddingStart="10dp"
+            android:paddingLeft="10dp"
+            android:paddingEnd="10dp"
+            android:paddingRight="10dp"
+            android:textAlignment="textEnd"
+            android:text="1080"
+            android:gravity="end" />
+</LinearLayout>

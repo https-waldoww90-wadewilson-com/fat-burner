@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import edu.stts.fatburner.R;
 import edu.stts.fatburner.data.model.User;
@@ -28,14 +29,17 @@ public class SugarActivity extends AppCompatActivity {
 
     public void nextSugar(View v) {
         Intent intent = null;
-        switch(v.getId()){
-            case R.id.btnNextSugar:
-                double sugar = Double.parseDouble(et.getText().toString());
-                userBaru.setBloodsugar(sugar);
-                intent = new Intent(this,CholesterolActivity.class);
-                intent.putExtra("userBaru",userBaru);
-                break;
+        if(!et.getText().toString().equals("")){
+            switch(v.getId()){
+                case R.id.btnNextSugar:
+                    double sugar = Double.parseDouble(et.getText().toString());
+                    userBaru.setBloodsugar(sugar);
+                    intent = new Intent(this,CholesterolActivity.class);
+                    intent.putExtra("userBaru",userBaru);
+                    break;
+            }
+            if (intent != null && !et.getText().equals("")) startActivity(intent);
         }
-        if (intent != null) startActivity(intent);
+        else Toast.makeText(this, "Field cannot be empty", Toast.LENGTH_SHORT).show();
     }
 }

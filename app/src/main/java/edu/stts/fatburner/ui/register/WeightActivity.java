@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import edu.stts.fatburner.R;
 import edu.stts.fatburner.data.model.User;
@@ -28,14 +29,18 @@ public class WeightActivity extends AppCompatActivity {
 
     public void nextWeight(View v) {
         Intent intent = null;
-        switch(v.getId()){
-            case R.id.btnNextWeight:
-                double weight = Double.parseDouble(et.getText().toString());
-                userBaru.setWeight(weight);
-                intent = new Intent(this,HeightActivity.class);
-                intent.putExtra("userBaru",userBaru);
-                break;
+        if(!et.getText().toString().equals("")){
+            switch(v.getId()){
+                case R.id.btnNextWeight:
+                    double weight = Double.parseDouble(et.getText().toString());
+                    userBaru.setWeight(weight);
+                    intent = new Intent(this,HeightActivity.class);
+                    intent.putExtra("userBaru",userBaru);
+                    break;
+            }
+            if (intent != null && !et.getText().equals("")) startActivity(intent);
         }
-        if (intent != null) startActivity(intent);
+        else Toast.makeText(this, "Field cannot be empty", Toast.LENGTH_SHORT).show();
+
     }
 }
