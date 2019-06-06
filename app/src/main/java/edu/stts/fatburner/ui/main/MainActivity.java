@@ -136,11 +136,18 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_settings) {
 
         }else if(id == R.id.nav_logout){
+            deleteUsername();
             startActivity(new Intent(MainActivity.this,LoginActivity.class));
             finish();
         }
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void deleteUsername(){
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putInt("userID",-1);
+        editor.apply();
     }
 }

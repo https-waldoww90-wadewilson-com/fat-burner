@@ -48,6 +48,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         mApiInterface = ApiClient.getClient().create(API.class);
         //Untuk simpan id user yg login(kyk simpan ke session)
         pref = getApplicationContext().getSharedPreferences("FatBurnerPrefs",Context.MODE_PRIVATE);
+        if(pref.getInt("userID",-1)!=-1){
+            startActivity(new Intent(LoginActivity.this,MainActivity.class));
+            finish();
+        }
     }
 
     @Override
