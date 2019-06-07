@@ -39,7 +39,7 @@ public class EditWorkoutDialog extends DialogFragment implements View.OnClickLis
     private ImageButton btnClose;
     private API mApiInterface;
     private SharedPreferences prefs;
-    private SweetAlertDialog pDialog;
+    private SweetAlertDialog pDialog,deleteDialog;
 
     public static EditWorkoutDialog newInstance(LogWorkout data){
         EditWorkoutDialog instance = new EditWorkoutDialog();
@@ -108,7 +108,25 @@ public class EditWorkoutDialog extends DialogFragment implements View.OnClickLis
                 updateLogWorkout(Integer.parseInt(etJumlah.getText().toString()));
             }else Toast.makeText(requireContext(),"Field size must not be empty!",Toast.LENGTH_LONG).show();
         }else if(id == R.id.dialog_editworkout_delete){
-            deleteLogWorkout();
+            deleteDialog = new SweetAlertDialog(requireContext(), SweetAlertDialog.WARNING_TYPE);
+            deleteDialog.setTitleText("Are you sure?")
+                    .setContentText("Won't be able to recover this data!")
+                    .setConfirmText("Yes,delete it!")
+                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sDialog) {
+                            deleteLogWorkout();
+                            sDialog.dismissWithAnimation();
+                        }
+                    })
+                    .setCancelText("Cancel")
+                    .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sDialog) {
+                            sDialog.cancel();
+                        }
+                    })
+                    .show();
         }
     }
 

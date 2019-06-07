@@ -268,8 +268,8 @@ public class ReportsFragment extends Fragment {
             pieChart.setVisibility(View.VISIBLE);
             loadDataPieChart(totalBreakfast,totalLunch,totalDinner,totalSnack);
         }else pieChart.setVisibility(View.GONE);
-
         calculateTotalCalories();
+        calculatePercent(totalBreakfast,totalLunch,totalDinner,totalSnack);
         if(date.equals("date")) calculatePercentGoal(totalBreakfast,totalLunch,totalDinner,totalSnack);
         else tvPercentGoal.setText("");
     }
@@ -280,8 +280,10 @@ public class ReportsFragment extends Fragment {
         tvPercentGoal.setText((int) percent + "% of goal");
         if(percent > 100) tvPercentGoal.setTextColor(Color.parseColor("#FF0000"));
         else tvPercentGoal.setTextColor(Color.parseColor("#7F7F7F"));
+    }
 
-        //percent
+    private void calculatePercent(int breakfast, int lunch,int dinner,int snack){
+        int total = breakfast + lunch + dinner + snack;
         DecimalFormat df = new DecimalFormat("0.00");
         float breakfastPercent =(float) breakfast * 100 / total ;
         float lunchPercent = (float) lunch * 100 / total;
