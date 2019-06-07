@@ -9,6 +9,7 @@ import edu.stts.fatburner.data.model.LogFood;
 import edu.stts.fatburner.data.model.LogWorkout;
 import edu.stts.fatburner.data.model.User;
 import edu.stts.fatburner.data.model.Workout;
+import edu.stts.fatburner.data.network.body.CalorieUpdateBody;
 import edu.stts.fatburner.data.network.body.LogFoodBody;
 import edu.stts.fatburner.data.network.body.LogWorkoutBody;
 import edu.stts.fatburner.data.network.body.LoginBody;
@@ -44,6 +45,9 @@ public interface API {
 
     @POST("api/workout/log/update/{id}")
     Call<InsertResponse> updateLogWorkout(@Header("Authorization") String token,@Path("id") int logId,@Body UpdateLogWorkoutBody body);
+
+    @POST("api/calorie/update/{userid}")
+    Call<InsertResponse> updateCalorieGoal(@Header("Authorization") String token,@Path("userid") int userid,@Body CalorieUpdateBody body);
 
     @GET("api/food/{category}")
     Call<List<Food>> getFoods(@Header("Authorization") String token,@Path("category") String category);

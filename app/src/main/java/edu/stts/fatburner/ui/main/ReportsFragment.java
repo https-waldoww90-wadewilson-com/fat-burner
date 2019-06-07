@@ -34,6 +34,7 @@ import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.github.mikephil.charting.utils.MPPointF;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,11 +49,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static android.support.constraint.Constraints.TAG;
 
 public class ReportsFragment extends Fragment {
     private TextView tvTotalCalories,tvCalBreakfast,tvCalLunch,tvCalDinner,tvCalSnack,tvCalFood;
-    private TextView tvPercentGoal,tvGoal;
+    private TextView tvPercentGoal,tvGoal,tvPercentBreakfast,tvPercentLunch,tvPercentDinner,tvPercentSnack;
     private Spinner timeSpinner;
     private RecyclerView rvFood;
     private LinearLayout llTotalFood;
@@ -65,8 +65,6 @@ public class ReportsFragment extends Fragment {
     private PieChart pieChart;
     private String date="date";
     private double userCalorieGoal;
-
-    private float[] yData = {1,1,1,1};
     private String[] xData = {"Breakfast","Lunch","Dinner","Snack"};
 
     public ReportsFragment() {
@@ -89,6 +87,10 @@ public class ReportsFragment extends Fragment {
         tvPercentGoal = v.findViewById(R.id.tvPercentGoal);
         tvGoal = v.findViewById(R.id.tvGoal);
         pieChart = v.findViewById(R.id.pieChart);
+        tvPercentBreakfast = v.findViewById(R.id.percentBreakfast);
+        tvPercentLunch = v.findViewById(R.id.percentLunch);
+        tvPercentDinner = v.findViewById(R.id.percentDinner);
+        tvPercentSnack = v.findViewById(R.id.percentSnack);
         pieChartSettings();
         return v;
     }
@@ -269,14 +271,31 @@ public class ReportsFragment extends Fragment {
 
         calculateTotalCalories();
         if(date.equals("date")) calculatePercentGoal(totalBreakfast,totalLunch,totalDinner,totalSnack);
+        else tvPercentGoal.setText("");
     }
 
     private void calculatePercentGoal(int breakfast, int lunch,int dinner,int snack){
         int total = breakfast + lunch + dinner + snack;
-        double percent = total / userCalorieGoal * 100;
+        double percent = (double) total / userCalorieGoal * 100;
         tvPercentGoal.setText((int) percent + "% of goal");
         if(percent > 100) tvPercentGoal.setTextColor(Color.parseColor("#FF0000"));
         else tvPercentGoal.setTextColor(Color.parseColor("#7F7F7F"));
+
+        //percent
+        DecimalFormat df = new DecimalFormat("0.00");
+        float breakfastPercent =(float) breakfast * 100 / total ;
+        float lunchPercent = (float) lunch * 100 / total;
+        float dinnerPercent = (float)dinner *100 / total;
+        float snackPercent = (float)snack *100 / total;
+
+        if(breakfast > 0) tvPercentBreakfast.setText(df.format(breakfastPercent)+" %");
+        else tvPercentBreakfast.setText("0 %");
+        if(lunch > 0)tvPercentLunch.setText(df.format(lunchPercent)+" %");
+        else tvPercentLunch.setText("0 %");
+        if(dinner > 0)tvPercentDinner.setText(df.format(dinnerPercent)+" %");
+        else tvPercentDinner.setText("0 %");
+        if(snack > 0)tvPercentSnack.setText(df.format(snackPercent)+" %");
+        else tvPercentSnack.setText("0 %");
     }
 
     private void calculateTotalCalories(){

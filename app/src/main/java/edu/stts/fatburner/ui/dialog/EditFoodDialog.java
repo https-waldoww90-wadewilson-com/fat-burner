@@ -38,7 +38,7 @@ public class EditFoodDialog extends DialogFragment{
     private ImageButton btnClose;
     private API mApiInterface;
     private SharedPreferences prefs;
-    private SweetAlertDialog pDialog;
+    private SweetAlertDialog pDialog,deleteDialog;
 
     public static EditFoodDialog newInstance(LogFood data){
         EditFoodDialog instance = new EditFoodDialog();
@@ -80,7 +80,25 @@ public class EditFoodDialog extends DialogFragment{
         btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                deleteLogFood();
+                deleteDialog = new SweetAlertDialog(requireContext(), SweetAlertDialog.WARNING_TYPE);
+                deleteDialog.setTitleText("Are you sure?")
+                        .setContentText("Won't be able to recover this data!")
+                        .setConfirmText("Yes,delete it!")
+                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(SweetAlertDialog sDialog) {
+                                deleteLogFood();
+                                sDialog.dismissWithAnimation();
+                            }
+                        })
+                        .setCancelText("Cancel")
+                        .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(SweetAlertDialog sDialog) {
+                                sDialog.cancel();
+                            }
+                        })
+                        .show();
             }
         });
         mApiInterface = ApiClient.getClient().create(API.class);

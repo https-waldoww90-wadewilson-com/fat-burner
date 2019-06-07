@@ -127,19 +127,20 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_home) {
             setTitle("Home");
             loadFragment(new HomeFragment());
-        } else if (id == R.id.nav_plans) {
-            Intent i = new Intent(MainActivity.this,GraphicActivity.class);
-            startActivity(i);
         } else if (id == R.id.nav_report) {
             setTitle("Reports");
             loadFragment(new ReportsFragment());
         } else if (id == R.id.nav_settings) {
-
+            startActivity(new Intent(MainActivity.this,SettingsActivity.class));
         }else if(id == R.id.nav_logout){
             deleteUsername();
             startActivity(new Intent(MainActivity.this,LoginActivity.class));
             finish();
         }
+        //else if (id == R.id.nav_plans) {
+        //            Intent i = new Intent(MainActivity.this,GraphicActivity.class);
+        //            startActivity(i);
+        //        }
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
