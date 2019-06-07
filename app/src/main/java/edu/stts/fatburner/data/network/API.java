@@ -14,6 +14,7 @@ import edu.stts.fatburner.data.network.body.LogWorkoutBody;
 import edu.stts.fatburner.data.network.body.LoginBody;
 import edu.stts.fatburner.data.network.body.UpdateLogFoodBody;
 import edu.stts.fatburner.data.network.body.UpdateLogWorkoutBody;
+import edu.stts.fatburner.data.network.response.CalorieResponse;
 import edu.stts.fatburner.data.network.response.InsertResponse;
 import edu.stts.fatburner.data.network.response.LoginResponse;
 import edu.stts.fatburner.data.network.response.RegisterResponse;
@@ -61,6 +62,9 @@ public interface API {
 
     @GET("api/workout/log/{userid}/{filter}")
     Call<List<LogWorkout>> getLogWorkout(@Header("Authorization") String token,@Path("userid") int userID, @Path("filter") String filter);
+
+    @GET("api/calorie/{id}")
+    Call<CalorieResponse> getCalorie(@Header("Authorization") String token, @Path("id") int userId);
 
     @DELETE("api/food/log/delete/{id}")
     Call<InsertResponse> deleteLogFood(@Header("Authorization") String token,@Path("id") int logId);

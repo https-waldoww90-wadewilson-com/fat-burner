@@ -1,6 +1,7 @@
 package edu.stts.fatburner.ui.register;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.Toast;
 
 import com.jaredrummler.materialspinner.MaterialSpinner;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import edu.stts.fatburner.R;
 import edu.stts.fatburner.data.model.User;
 import edu.stts.fatburner.data.network.API;
@@ -29,6 +31,7 @@ public class EndRegisterActivity extends AppCompatActivity {
     private User userBaru;
     private API mApiInterface;
     private String plan;
+    private SweetAlertDialog pDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +73,7 @@ public class EndRegisterActivity extends AppCompatActivity {
                 userBaru.setEmail(etEmail.getText().toString());
                 userBaru.setName(etName.getText().toString());
                 userBaru.setPassword(etPassword.getText().toString());
+                userBaru.setTipe(plan);
                 doRegister(userBaru);
             }
         }else Toast.makeText(EndRegisterActivity.this,"All field must be filled",Toast.LENGTH_SHORT).show();
@@ -84,6 +88,12 @@ public class EndRegisterActivity extends AppCompatActivity {
     }
 
     private void doRegister(User user){
+        pDialog = new SweetAlertDialog(this,SweetAlertDialog.PROGRESS_TYPE);
+        pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+        pDialog.setTitleText("Registering user...");
+        pDialog.setCancelable(false);
+        pDialog.show();
+
         Call<RegisterResponse> regCall = mApiInterface.register(user);
         regCall.enqueue(new Callback<RegisterResponse>() {
             @Override
@@ -93,10 +103,12 @@ public class EndRegisterActivity extends AppCompatActivity {
                     Toast.makeText(EndRegisterActivity.this, response.getMessage(), Toast.LENGTH_LONG).show();
                     startActivity(new Intent(EndRegisterActivity.this, LoginActivity.class));
                 }
+                pDialog.dismissWithAnimation();
             }
 
             @Override
             public void onFailure(Call<RegisterResponse> call, Throwable t) {
+                pDialog.dismissWithAnimation();
                 Toast.makeText(EndRegisterActivity.this,t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });

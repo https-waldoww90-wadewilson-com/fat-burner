@@ -13,9 +13,18 @@ public class User implements Serializable {
     private double bloodsugar;
     private double cholesterol;
     private double calorie;
+    private String tipe;
 
     public User(){
 
+    }
+
+    public String getTipe() {
+        return tipe;
+    }
+
+    public void setTipe(String tipe) {
+        this.tipe = tipe;
     }
 
     public String getEmail() {
