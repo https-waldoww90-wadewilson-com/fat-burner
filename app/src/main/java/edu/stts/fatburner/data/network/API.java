@@ -49,30 +49,30 @@ public interface API {
     @POST("api/calorie/update/{userid}")
     Call<InsertResponse> updateCalorieGoal(@Header("Authorization") String token,@Path("userid") int userid,@Body CalorieUpdateBody body);
 
-    @GET("api/food/{category}")
+    @GET("api/food/{category}/")
     Call<List<Food>> getFoods(@Header("Authorization") String token,@Path("category") String category);
 
-    @GET("api/food")
+    @GET("api/food/")
     Call<List<FoodCategory>> getFoodCategory(@Header("Authorization") String token);
 
     @GET("api/articles/")
     Call<List<Article>> getArticles(@Header("Authorization") String token);
 
-    @GET("api/workouts")
+    @GET("api/workouts/")
     Call<List<Workout>> getWorkouts(@Header("Authorization") String token);
 
-    @GET("api/food/log/{userid}/{filter}")
+    @GET("api/food/log/{userid}/{filter}/")
     Call<List<LogFood>> getLogFood(@Header("Authorization") String token,@Path("userid") int userID,@Path("filter") String filter);
 
-    @GET("api/workout/log/{userid}/{filter}")
+    @GET("api/workout/log/{userid}/{filter}/")
     Call<List<LogWorkout>> getLogWorkout(@Header("Authorization") String token,@Path("userid") int userID, @Path("filter") String filter);
 
     @GET("api/calorie/{id}")
     Call<CalorieResponse> getCalorie(@Header("Authorization") String token, @Path("id") int userId);
 
-    @DELETE("api/food/log/delete/{id}")
+    @DELETE("api/food/log/delete/{id}/")
     Call<InsertResponse> deleteLogFood(@Header("Authorization") String token,@Path("id") int logId);
 
-    @DELETE("api/workout/log/delete/{id}")
+    @DELETE("api/workout/log/delete/{id}/")
     Call<InsertResponse> deleteLogWorkout(@Header("Authorization") String token,@Path("id") int logId);
 }
