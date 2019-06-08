@@ -2,13 +2,15 @@ package edu.stts.fatburner.data.model;
 
 public class Article {
     private String artikelid;
+    private String judul;
     private String nama;
     private String imageurl;
     private String datecreated;
     private String isi;
 
-    public Article(String artikelid, String nama, String imageurl, String datecreated, String isi) {
+    public Article(String artikelid, String judul, String nama, String imageurl, String datecreated, String isi) {
         this.artikelid = artikelid;
+        this.judul = judul;
         this.nama = nama;
         this.imageurl = imageurl;
         this.datecreated = datecreated;
@@ -22,6 +24,10 @@ public class Article {
     public void setArtikelid(String artikelid) {
         this.artikelid = artikelid;
     }
+
+    public String getJudul() { return judul; }
+
+    public void setJudul(String judul) { this.judul = judul; }
 
     public String getNama() {
         return nama;

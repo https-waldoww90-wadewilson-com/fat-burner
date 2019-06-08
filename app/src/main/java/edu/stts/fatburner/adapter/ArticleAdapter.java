@@ -35,6 +35,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
+        viewHolder.tvJudul.setText(articleList.get(i).getJudul());
         viewHolder.tvNama.setText(articleList.get(i).getNama());
         viewHolder.tvTanggal.setText(articleList.get(i).getDatecreated());
         viewHolder.tvIsi.setText(articleList.get(i).getIsi()+"");
@@ -49,12 +50,13 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView tvNama, tvTanggal, tvIsi;
+        private TextView tvJudul, tvNama, tvTanggal, tvIsi;
         private ImageView ivPost;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
+            tvJudul = itemView.findViewById(R.id.tvJudul);
             tvNama = itemView.findViewById(R.id.tvNama);
             tvTanggal = itemView.findViewById(R.id.tvTanggal);
             tvIsi = itemView.findViewById(R.id.tvIsi);
