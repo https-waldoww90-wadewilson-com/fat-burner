@@ -40,7 +40,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
         viewHolder.tvTanggal.setText(articleList.get(i).getDatecreated());
         viewHolder.tvIsi.setText(articleList.get(i).getIsi()+"");
         Glide.with(context)
-                .load(articleList.get(i).getImageurl())
+                .load("http://www.pikukupikumu.com/fat/public/upload/"+articleList.get(i).getArtikelid()+".png")
                 .into(viewHolder.ivPost);
     }
 

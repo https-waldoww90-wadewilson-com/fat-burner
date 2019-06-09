@@ -55,7 +55,7 @@ public class ReportsFragment extends Fragment {
     private TextView tvPercentGoal,tvGoal,tvPercentBreakfast,tvPercentLunch,tvPercentDinner,tvPercentSnack;
     private Spinner timeSpinner;
     private RecyclerView rvFood;
-    private LinearLayout llTotalFood;
+    private LinearLayout llTotalFood,llGoal;
     private API mApiInterface;
     private SharedPreferences pref;
     private int totalBreakfast = 0,totalLunch = 0,totalDinner = 0,totalSnack=0;
@@ -91,6 +91,7 @@ public class ReportsFragment extends Fragment {
         tvPercentLunch = v.findViewById(R.id.percentLunch);
         tvPercentDinner = v.findViewById(R.id.percentDinner);
         tvPercentSnack = v.findViewById(R.id.percentSnack);
+        llGoal = v.findViewById(R.id.ll_goal);
         pieChartSettings();
         return v;
     }
@@ -200,7 +201,7 @@ public class ReportsFragment extends Fragment {
             public void onResponse(Call<CalorieResponse> call, Response<CalorieResponse> res) {
                 CalorieResponse response = res.body();
                 userCalorieGoal = response.getCalorie();
-                tvGoal.setText("Goal: "+response.getCalorie()+" cal");
+                tvGoal.setText("Goal: "+(int)response.getCalorie()+" cal");
             }
 
             @Override
@@ -270,8 +271,11 @@ public class ReportsFragment extends Fragment {
         }else pieChart.setVisibility(View.GONE);
         calculateTotalCalories();
         calculatePercent(totalBreakfast,totalLunch,totalDinner,totalSnack);
-        if(date.equals("date")) calculatePercentGoal(totalBreakfast,totalLunch,totalDinner,totalSnack);
-        else tvPercentGoal.setText("");
+        if(date.equals("date")) {
+            calculatePercentGoal(totalBreakfast,totalLunch,totalDinner,totalSnack);
+            llGoal.setVisibility(View.VISIBLE);
+        }
+        else llGoal.setVisibility(View.GONE);
     }
 
     private void calculatePercentGoal(int breakfast, int lunch,int dinner,int snack){

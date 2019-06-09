@@ -1,6 +1,7 @@
 package edu.stts.fatburner.data.network;
 
 import java.util.List;
+import java.util.Map;
 
 import edu.stts.fatburner.data.model.Article;
 import edu.stts.fatburner.data.model.Food;
@@ -19,12 +20,17 @@ import edu.stts.fatburner.data.network.response.CalorieResponse;
 import edu.stts.fatburner.data.network.response.InsertResponse;
 import edu.stts.fatburner.data.network.response.LoginResponse;
 import edu.stts.fatburner.data.network.response.RegisterResponse;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
+import retrofit2.http.PartMap;
 import retrofit2.http.Path;
 
 public interface API {
@@ -48,6 +54,10 @@ public interface API {
 
     @POST("api/calorie/update/{userid}")
     Call<InsertResponse> updateCalorieGoal(@Header("Authorization") String token,@Path("userid") int userid,@Body CalorieUpdateBody body);
+
+    @Multipart
+    @POST("api/article/insert")
+    Call<InsertResponse> uploadImage(@Header("Authorization") String token,@Part("user_id") RequestBody id, @Part("judul") RequestBody judul, @Part("isi") RequestBody isi, @Part MultipartBody.Part imageurl);
 
     @GET("api/food/{category}/")
     Call<List<Food>> getFoods(@Header("Authorization") String token,@Path("category") String category);

@@ -80,7 +80,7 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<CalorieResponse> call, Response<CalorieResponse> res) {
                 CalorieResponse response = res.body();
-                etCalorie.setText(response.getCalorie()+"");
+                etCalorie.setText((int)response.getCalorie()+"");
                 pDialog.dismissWithAnimation();
             }
 

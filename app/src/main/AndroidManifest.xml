@@ -39,7 +39,8 @@
         <activity android:name=".ui.main.FoodActivity" />
         <activity android:name=".ui.main.GraphicActivity" />
         <activity android:name=".ui.main.WorkoutActivity" />
-        <activity android:name=".ui.main.SettingsActivity"></activity>
+        <activity android:name=".ui.main.SettingsActivity" />
+        <activity android:name=".ui.main.AddArticleActivity"></activity>
     </application>
 
 </manifest>

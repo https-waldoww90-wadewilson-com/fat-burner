@@ -52,6 +52,7 @@
                         android:textSize="30sp"
                         android:text="0"/>
                     <LinearLayout
+                        android:id="@+id/ll_goal"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
