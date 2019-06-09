@@ -4,6 +4,10 @@
     package="edu.stts.fatburner">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
 
     <application
         android:allowBackup="true"
@@ -14,6 +18,7 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:replace="android:icon">
+
         <activity android:name=".ui.register.CalorieActivity" />
         <activity android:name=".ui.register.EndRegisterActivity" />
         <activity android:name=".ui.register.SugarActivity" />

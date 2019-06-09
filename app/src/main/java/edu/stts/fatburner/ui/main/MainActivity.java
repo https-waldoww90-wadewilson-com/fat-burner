@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity
     private BottomNavigationView bottomNav;
     private SharedPreferences pref;
     public static final int CODE_INFOFOOD = 1;
+    public static final int CODE_HOME = 2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,7 +52,9 @@ public class MainActivity extends AppCompatActivity
 
         View header = navigationView.getHeaderView(0);
         TextView email = (TextView) header.findViewById(R.id.header_email);
+        TextView name = (TextView) header.findViewById(R.id.header_name);
         email.setText(pref.getString("email",""));
+        name.setText(pref.getString("name",""));
 
         //Untuk bottom navigation
         bottomNav = findViewById(R.id.main_bnav);
@@ -102,6 +105,10 @@ public class MainActivity extends AppCompatActivity
             if(resultCode == Activity.RESULT_OK){
                 Boolean isInsertSuccess = data.getExtras().getBoolean("data");
                 if(isInsertSuccess) loadFragment(new DiaryFragment());
+            }
+        }else if(requestCode == CODE_HOME){
+            if(resultCode == Activity.RESULT_OK){
+                loadFragment(new HomeFragment());
             }
         }
     }

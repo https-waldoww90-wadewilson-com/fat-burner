@@ -33,6 +33,14 @@
         android:background="@color/colorLightOrange"
         android:text="Choose Image" />
     <Button
+        android:id="@+id/btn_addarticle_take"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:background="@color/colorLightOrange"
+        android:visibility="gone"
+        android:text="Take a picture"/>
+    <Button
         android:id="@+id/btn_addarticle_remove"
         android:visibility="gone"
         android:layout_marginTop="5dp"

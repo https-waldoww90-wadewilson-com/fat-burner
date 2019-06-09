@@ -1,16 +1,22 @@
 package edu.stts.fatburner.ui.main;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -28,6 +34,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 
 import androidx.annotation.NonNull;
@@ -46,7 +54,7 @@ import retrofit2.Response;
 
 public class AddArticleActivity extends AppCompatActivity implements View.OnClickListener {
     private API mApiInterface;
-    private Button btnAddImage,btnSave,btnRemove;
+    private Button btnAddImage,btnSave,btnRemove,btnTake;
     private EditText etJudul,etIsi;
     private ImageView img;
     private Bitmap chosenImage;
@@ -60,6 +68,7 @@ public class AddArticleActivity extends AppCompatActivity implements View.OnClic
         setContentView(R.layout.activity_add_article);
         btnAddImage = findViewById(R.id.btn_addarticle_image);
         btnRemove = findViewById(R.id.btn_addarticle_remove);
+        btnTake = findViewById(R.id.btn_addarticle_take);
         img = findViewById(R.id.iv_addarticle_image);
         btnSave = findViewById(R.id.btn_addarticle);
         etJudul = findViewById(R.id.et_addarticle_title);
@@ -69,12 +78,14 @@ public class AddArticleActivity extends AppCompatActivity implements View.OnClic
         btnAddImage.setOnClickListener(this);
         btnSave.setOnClickListener(this);
         btnRemove.setOnClickListener(this);
+        btnTake.setOnClickListener(this);
         mApiInterface = ApiClient.getClient().create(API.class);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setTitle("Add New Article");
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onClick(View v) {
         int id = v.getId();
@@ -91,6 +102,8 @@ public class AddArticleActivity extends AppCompatActivity implements View.OnClic
             img.setImageBitmap(null);
             img.setVisibility(View.GONE);
             btnRemove.setVisibility(View.GONE);
+        }else if(id == R.id.btn_addarticle_take){
+
         }
     }
 
@@ -132,7 +145,12 @@ public class AddArticleActivity extends AppCompatActivity implements View.OnClic
                 InsertResponse response = res.body();
                 Toast.makeText(AddArticleActivity.this, response.getMessage(), Toast.LENGTH_LONG).show();
                 pDialog.dismissWithAnimation();
-                if (response != null && !response.isError()) finish();
+                if (response != null && !response.isError()){
+                    Intent i = new Intent();
+                    i.putExtra("data",true);
+                    setResult(Activity.RESULT_OK,i);
+                    finish();
+                }
             }
 
             @Override

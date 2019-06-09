@@ -279,8 +279,13 @@ public class ReportsFragment extends Fragment {
     }
 
     private void calculatePercentGoal(int breakfast, int lunch,int dinner,int snack){
+        Log.d("COBA",breakfast+"");
+        Log.d("COBA",lunch+"");
+        Log.d("COBA",dinner+"");
+        Log.d("COBA",snack+"");
         int total = breakfast + lunch + dinner + snack;
         double percent = (double) total / userCalorieGoal * 100;
+        Log.d("COBA",percent+"");
         tvPercentGoal.setText((int) percent + "% of goal");
         if(percent > 100) tvPercentGoal.setTextColor(Color.parseColor("#FF0000"));
         else tvPercentGoal.setTextColor(Color.parseColor("#7F7F7F"));

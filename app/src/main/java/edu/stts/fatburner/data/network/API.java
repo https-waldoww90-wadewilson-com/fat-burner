@@ -14,6 +14,7 @@ import edu.stts.fatburner.data.network.body.CalorieUpdateBody;
 import edu.stts.fatburner.data.network.body.LogFoodBody;
 import edu.stts.fatburner.data.network.body.LogWorkoutBody;
 import edu.stts.fatburner.data.network.body.LoginBody;
+import edu.stts.fatburner.data.network.body.UpdateArticleBody;
 import edu.stts.fatburner.data.network.body.UpdateLogFoodBody;
 import edu.stts.fatburner.data.network.body.UpdateLogWorkoutBody;
 import edu.stts.fatburner.data.network.response.CalorieResponse;
@@ -59,6 +60,9 @@ public interface API {
     @POST("api/article/insert")
     Call<InsertResponse> uploadImage(@Header("Authorization") String token,@Part("user_id") RequestBody id, @Part("judul") RequestBody judul, @Part("isi") RequestBody isi, @Part MultipartBody.Part imageurl);
 
+    @POST("api/article/update/{id}")
+    Call<InsertResponse> updateArticle(@Header("Authorization") String token,@Path("id") int articleid,@Body UpdateArticleBody body);
+
     @GET("api/food/{category}/")
     Call<List<Food>> getFoods(@Header("Authorization") String token,@Path("category") String category);
 
@@ -85,4 +89,7 @@ public interface API {
 
     @DELETE("api/workout/log/delete/{id}/")
     Call<InsertResponse> deleteLogWorkout(@Header("Authorization") String token,@Path("id") int logId);
+
+    @DELETE("api/article/delete/{id}/")
+    Call<InsertResponse> deleteArticle(@Header("Authorization") String token,@Path("id") int logId);
 }

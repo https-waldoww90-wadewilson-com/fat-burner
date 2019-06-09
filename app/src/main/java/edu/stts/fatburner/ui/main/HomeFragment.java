@@ -3,6 +3,7 @@ package edu.stts.fatburner.ui.main;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -14,19 +15,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import edu.stts.fatburner.R;
 import edu.stts.fatburner.adapter.ArticleAdapter;
+import edu.stts.fatburner.adapter.listener.RvOptionListener;
 import edu.stts.fatburner.data.model.Article;
 import edu.stts.fatburner.data.model.LogFood;
 import edu.stts.fatburner.data.model.LogWorkout;
 import edu.stts.fatburner.data.network.API;
 import edu.stts.fatburner.data.network.ApiClient;
+import edu.stts.fatburner.data.network.response.InsertResponse;
+import edu.stts.fatburner.ui.dialog.EditArticleDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -41,6 +47,7 @@ public class HomeFragment extends Fragment {
     private SharedPreferences pref;
     private TextView tvFood,tvWorkout,tvWeight;
     private LinearLayout llAddArticle;
+    private SweetAlertDialog deleteDialog;
 
     public HomeFragment() {
 
@@ -66,7 +73,35 @@ public class HomeFragment extends Fragment {
         mApiInterface = ApiClient.getClient().create(API.class);
         listArticle = new ArrayList<>();
         //Recyclerview untuk artikel
-        adapt = new ArticleAdapter(requireContext(),listArticle);
+        String name = pref.getString("name","");
+        adapt = new ArticleAdapter(requireContext(), listArticle, name, new RvOptionListener() {
+            @Override
+            public void optionClick(View view, int position) {
+                PopupMenu popupMenu = new PopupMenu(requireContext(), view);
+                popupMenu.inflate(R.menu.article_menu);
+                popupMenu.setOnMenuItemClickListener(item -> {
+                    switch (item.getItemId()) {
+                        case R.id.menuDelete:
+                            deleteLogFood(position);
+                            break;
+                        case R.id.menuEdit:
+                            EditArticleDialog dialog = EditArticleDialog.newInstance(listArticle.get(position));
+                            dialog.setCallback(new EditArticleDialog.Callback() {
+                                @Override
+                                public void success(Boolean flag) {
+                                    getArticlesData();
+                                }
+                            });
+                            dialog.show(getFragmentManager(),"tag");
+                            break;
+                        default:
+                            break;
+                    }
+                    return false;
+                });
+                popupMenu.show();
+            }
+        });
         rview.setLayoutManager(new LinearLayoutManager(requireContext()));
         rview.setAdapter(adapt);
         //Buat load ulang artikel
@@ -95,7 +130,34 @@ public class HomeFragment extends Fragment {
         llAddArticle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getActivity().startActivity(new Intent(getActivity(),AddArticleActivity.class));
+                getActivity().startActivityForResult(new Intent(getActivity(),AddArticleActivity.class),MainActivity.CODE_HOME);
+            }
+        });
+    }
+
+    private void deleteLogFood(int position){
+        //untuk dialog
+        deleteDialog = new SweetAlertDialog(requireContext(),SweetAlertDialog.PROGRESS_TYPE);
+        deleteDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+        deleteDialog.setTitleText("Loading");
+        deleteDialog.setCancelable(false);
+        deleteDialog.show();
+
+        String token = pref.getString("token","");
+        Call<InsertResponse> deleteCall = mApiInterface.deleteArticle(token,Integer.parseInt(listArticle.get(position).getArtikelid()+""));
+        deleteCall.enqueue(new retrofit2.Callback<InsertResponse>() {
+            @Override
+            public void onResponse(Call<InsertResponse> call, Response<InsertResponse> res) {
+                InsertResponse response = res.body();
+                Toast.makeText(requireContext(),response.getMessage(), Toast.LENGTH_LONG).show();
+                deleteDialog.dismissWithAnimation();
+                getArticlesData();
+            }
+
+            @Override
+            public void onFailure(Call<InsertResponse> call, Throwable t) {
+                Toast.makeText(requireContext(),t.getMessage(), Toast.LENGTH_LONG).show();
+                deleteDialog.dismissWithAnimation();
             }
         });
     }

@@ -84,27 +84,27 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 pLoadingDialog.dismissWithAnimation();
                 LoginResponse response = res.body();
                 if(!response.isError()){
-                    saveIdToken(Integer.parseInt(response.getMessage().getUserid()),response.getMessage().getToken(),response.getMessage().getWeight(),email);
+                    saveIdToken(Integer.parseInt(response.getMessage().getUserid()),response.getMessage().getToken(),response.getMessage().getWeight(),email,response.getMessage().getName());
                     startActivity(new Intent(LoginActivity.this,MainActivity.class));
                     finish();
                 }
-                else pErrorDialog.show();
             }
 
             @Override
             public void onFailure(Call<LoginResponse> call, Throwable t) {
                 pLoadingDialog.dismissWithAnimation();
-                Toast.makeText(LoginActivity.this,t.getMessage(), Toast.LENGTH_LONG).show();
+                pErrorDialog.show();
             }
         });
     }
 
-    private void saveIdToken(int id,String token,float weight,String email){
+    private void saveIdToken(int id,String token,float weight,String email,String name){
         SharedPreferences.Editor editor = pref.edit();
         editor.putInt("userID",id);
         editor.putString("token","Bearer "+token);
         editor.putFloat("weight",weight);
         editor.putString("email",email);
+        editor.putString("name",name);
         editor.apply();
     }
 

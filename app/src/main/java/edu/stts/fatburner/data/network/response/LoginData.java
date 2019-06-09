@@ -4,6 +4,15 @@ public class LoginData{
     private String token;
     private String userid;
     private float weight;
+    private String name;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public float getWeight() {
         return weight;
