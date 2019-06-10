@@ -149,8 +149,8 @@ public class MainActivity extends AppCompatActivity
             startActivity(new Intent(MainActivity.this,LoginActivity.class));
             finish();
         }else if (id == R.id.nav_plans) {
-            Intent i = new Intent(MainActivity.this,GraphicActivity.class);
-            startActivity(i);
+            setTitle("Meal Plans");
+            loadFragment(new PlanFragment());
         }
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
