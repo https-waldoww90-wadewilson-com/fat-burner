@@ -86,6 +86,11 @@ public class MainActivity extends AppCompatActivity
                     fragment = new ReportsFragment();
                     loadFragment(fragment);
                     return true;
+                case R.id.bnav_plan:
+                    setTitle("Meal Plans");
+                    fragment = new PlanFragment();
+                    loadFragment(fragment);
+                    return true;
             }
             return false;
         }
@@ -143,11 +148,10 @@ public class MainActivity extends AppCompatActivity
             deleteUsername();
             startActivity(new Intent(MainActivity.this,LoginActivity.class));
             finish();
+        }else if (id == R.id.nav_plans) {
+            Intent i = new Intent(MainActivity.this,GraphicActivity.class);
+            startActivity(i);
         }
-        //else if (id == R.id.nav_plans) {
-        //            Intent i = new Intent(MainActivity.this,GraphicActivity.class);
-        //            startActivity(i);
-        //        }
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;

@@ -58,7 +58,7 @@ public class ReportsFragment extends Fragment {
     private LinearLayout llTotalFood,llGoal;
     private API mApiInterface;
     private SharedPreferences pref;
-    private int totalBreakfast = 0,totalLunch = 0,totalDinner = 0,totalSnack=0;
+    private int totalBreakfast = 0,totalLunch = 0,totalDinner = 0,totalSnack = 0;
     private List<LogFood> listBreakfast,listLunch,listDinner,listSnack,listFood;
     private SweetAlertDialog pDialog;
     private ReportFoodRvAdapter rvAdapter;
@@ -237,32 +237,47 @@ public class ReportsFragment extends Fragment {
     }
 
     private void displayLogFoodData(List<LogFood> data){
-        totalBreakfast = 0; totalLunch = 0; totalDinner = 0; totalSnack=0;
+        totalBreakfast = 0; totalLunch = 0; totalDinner = 0; totalSnack = 0;
         listBreakfast.clear();
         listLunch.clear();
         listDinner.clear();
         listSnack.clear();
 
         for(int i=0;i<data.size();i++){
+            Log.d("COBA",i+"");
+            Log.d("COBA",data.get(i).getTipe()+"");
+            Log.d("COBA",data.get(i).getJumlah()+","+data.get(i).getKalori()+"");
             if(data.get(i).getTipe().toLowerCase().equals("breakfast")) {
+                Log.d("COBA","msk breakfast");
                 totalBreakfast += data.get(i).getJumlah() * data.get(i).getKalori();
                 listBreakfast.add(data.get(i));
             }else if(data.get(i).getTipe().toLowerCase().equals("lunch")) {
+                Log.d("COBA","msk lunch");
                 totalLunch += data.get(i).getJumlah() * data.get(i).getKalori();
                 listLunch.add(data.get(i));
             }else if(data.get(i).getTipe().toLowerCase().equals("dinner")) {
+                Log.d("COBA","msk dinner");
                 totalDinner += data.get(i).getJumlah() * data.get(i).getKalori();
                 listDinner.add(data.get(i));
             }else if(data.get(i).getTipe().toLowerCase().equals("snack")) {
+                Log.d("COBA","msk snack");
                 totalSnack += data.get(i).getJumlah() * data.get(i).getKalori();
                 listSnack.add(data.get(i));
             }
         }
 
+
         tvCalBreakfast.setText(String.valueOf(totalBreakfast));
         tvCalLunch.setText(String.valueOf(totalLunch));
         tvCalDinner.setText(String.valueOf(totalDinner));
         tvCalSnack.setText(String.valueOf(totalSnack));
+
+        Log.d("COBA","setelah for");
+        Log.d("COBA","breakfast"+totalBreakfast+"");
+        Log.d("COBA","lunch"+totalLunch+"");
+        Log.d("COBA","dinner"+totalDinner+"");
+        Log.d("COBA","snack"+totalSnack+"");
+
 
         displayFood(data);
         if(totalBreakfast>0 || totalLunch>0 || totalDinner>0 || totalSnack>0){
@@ -279,10 +294,12 @@ public class ReportsFragment extends Fragment {
     }
 
     private void calculatePercentGoal(int breakfast, int lunch,int dinner,int snack){
-        Log.d("COBA",breakfast+"");
-        Log.d("COBA",lunch+"");
-        Log.d("COBA",dinner+"");
-        Log.d("COBA",snack+"");
+        Log.d("COBA","calculatePercentGoal");
+        Log.d("COBA","setelah for");
+        Log.d("COBA","breakfast"+breakfast+"");
+        Log.d("COBA","lunch"+lunch+"");
+        Log.d("COBA","dinner"+dinner+"");
+        Log.d("COBA","snack"+snack+"");
         int total = breakfast + lunch + dinner + snack;
         double percent = (double) total / userCalorieGoal * 100;
         Log.d("COBA",percent+"");

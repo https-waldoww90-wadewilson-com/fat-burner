@@ -47,7 +47,7 @@ public class HomeFragment extends Fragment {
     private SharedPreferences pref;
     private TextView tvFood,tvWorkout,tvWeight;
     private LinearLayout llAddArticle;
-    private SweetAlertDialog deleteDialog;
+    private SweetAlertDialog deleteDialog,deleteConfirm;
 
     public HomeFragment() {
 
@@ -82,7 +82,25 @@ public class HomeFragment extends Fragment {
                 popupMenu.setOnMenuItemClickListener(item -> {
                     switch (item.getItemId()) {
                         case R.id.menuDelete:
-                            deleteLogFood(position);
+                            deleteConfirm = new SweetAlertDialog(requireContext(), SweetAlertDialog.WARNING_TYPE);
+                            deleteConfirm.setTitleText("Are you sure?")
+                                    .setContentText("Won't be able to recover this data!")
+                                    .setConfirmText("Yes,delete it!")
+                                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                        @Override
+                                        public void onClick(SweetAlertDialog sDialog) {
+                                            deleteLogFood(position);
+                                            sDialog.dismissWithAnimation();
+                                        }
+                                    })
+                                    .setCancelText("Cancel")
+                                    .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                        @Override
+                                        public void onClick(SweetAlertDialog sDialog) {
+                                            sDialog.cancel();
+                                        }
+                                    })
+                                    .show();
                             break;
                         case R.id.menuEdit:
                             EditArticleDialog dialog = EditArticleDialog.newInstance(listArticle.get(position));

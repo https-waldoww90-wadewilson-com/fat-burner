@@ -9,6 +9,10 @@
         android:icon="@drawable/ic_diary"
         android:title="@string/label_diary" />
     <item
+        android:id="@+id/bnav_plan"
+        android:icon="@drawable/ic_plans"
+        android:title="@string/label_mealplans" />
+    <item
         android:id="@+id/bnav_report"
         android:icon="@drawable/ic_report"
         android:title="@string/label_reports" />

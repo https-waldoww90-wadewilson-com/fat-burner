@@ -5,6 +5,15 @@ public class LoginData{
     private String userid;
     private float weight;
     private String name;
+    private String goal;
+
+    public String getGoal() {
+        return goal;
+    }
+
+    public void setGoal(String goal) {
+        this.goal = goal;
+    }
 
     public String getName() {
         return name;

@@ -84,7 +84,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 pLoadingDialog.dismissWithAnimation();
                 LoginResponse response = res.body();
                 if(!response.isError()){
-                    saveIdToken(Integer.parseInt(response.getMessage().getUserid()),response.getMessage().getToken(),response.getMessage().getWeight(),email,response.getMessage().getName());
+                    saveIdToken(Integer.parseInt(response.getMessage().getUserid()),response.getMessage().getToken(),response.getMessage().getWeight(),email,response.getMessage().getName(),response.getMessage().getGoal());
                     startActivity(new Intent(LoginActivity.this,MainActivity.class));
                     finish();
                 }
@@ -98,13 +98,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         });
     }
 
-    private void saveIdToken(int id,String token,float weight,String email,String name){
+    private void saveIdToken(int id,String token,float weight,String email,String name,String goal){
         SharedPreferences.Editor editor = pref.edit();
         editor.putInt("userID",id);
         editor.putString("token","Bearer "+token);
         editor.putFloat("weight",weight);
         editor.putString("email",email);
         editor.putString("name",name);
+        editor.putString("goal",goal);
         editor.apply();
     }
 

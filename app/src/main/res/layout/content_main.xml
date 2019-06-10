@@ -23,6 +23,7 @@
         app:itemBackground="@color/colorPrimary"
         android:foreground="?attr/selectableItemBackground"
         app:itemTextColor="@color/colorBrown"
+        app:labelVisibilityMode="labeled"
         app:itemIconTint="@drawable/bottom_navigation_selector"
         app:menu="@menu/main_bottom_navigation" />
 
