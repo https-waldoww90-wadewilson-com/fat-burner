@@ -14,6 +14,7 @@ import edu.stts.fatburner.data.network.body.CalorieUpdateBody;
 import edu.stts.fatburner.data.network.body.LogFoodBody;
 import edu.stts.fatburner.data.network.body.LogWorkoutBody;
 import edu.stts.fatburner.data.network.body.LoginBody;
+import edu.stts.fatburner.data.network.body.PasswordBody;
 import edu.stts.fatburner.data.network.body.UpdateArticleBody;
 import edu.stts.fatburner.data.network.body.UpdateLogFoodBody;
 import edu.stts.fatburner.data.network.body.UpdateLogWorkoutBody;
@@ -55,6 +56,9 @@ public interface API {
 
     @POST("api/calorie/update/{userid}")
     Call<InsertResponse> updateCalorieGoal(@Header("Authorization") String token,@Path("userid") int userid,@Body CalorieUpdateBody body);
+
+    @POST("api/password/update/{userid}")
+    Call<InsertResponse> updatePassword(@Header("Authorization") String token,@Path("userid") int userid,@Body PasswordBody body);
 
     @Multipart
     @POST("api/article/insert")

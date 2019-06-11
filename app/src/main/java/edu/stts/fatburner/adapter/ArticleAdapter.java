@@ -54,11 +54,11 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
         viewHolder.tvIsi.setText(articleList.get(i).getIsi()+"");
         Glide.with(context)
                 .load("http://www.pikukupikumu.com/fat/public/upload/"+articleList.get(i).getArtikelid()+".png")
-                .apply(new RequestOptions()
-                        .diskCacheStrategy(DiskCacheStrategy.NONE)
-                        .skipMemoryCache(true))
                 .into(viewHolder.ivPost);
         viewHolder.tvOption.setVisibility(View.VISIBLE);
+        //.apply(new RequestOptions()
+        //                        .diskCacheStrategy(DiskCacheStrategy.NONE)
+        //                        .skipMemoryCache(true))
         if(!articleList.get(i).getNama().toLowerCase().equals(name.toLowerCase())) viewHolder.tvOption.setVisibility(View.GONE);
         else viewHolder.tvOption.setOnClickListener(v -> listener.optionClick(viewHolder.tvOption,i));
     }

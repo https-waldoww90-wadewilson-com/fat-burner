@@ -151,6 +151,8 @@ public class MainActivity extends AppCompatActivity
         }else if (id == R.id.nav_plans) {
             setTitle("Meal Plans");
             loadFragment(new PlanFragment());
+        }else if( id == R.id.nav_pass){
+            startActivity(new Intent(MainActivity.this,ChangePasswordActivity.class));
         }
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

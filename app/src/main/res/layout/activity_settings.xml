@@ -5,24 +5,130 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="10dp"
     tools:context=".ui.main.SettingsActivity">
-    <com.rengwuxian.materialedittext.MaterialEditText
-        android:id="@+id/et_settings_calorie"
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Calorie per day"
-        android:text=""
-        android:textSize="20sp"
-        app:met_baseColor="@color/colorBlack"
-        app:met_floatingLabel="highlight"
-        android:inputType="number"
-        app:met_primaryColor="?colorAccent"
-        app:met_singleLineEllipsis="true" />
-    <Button
-        android:id="@+id/btn_settings_save"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        android:text="Save"/>
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="15dp"
+            android:orientation="vertical">
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/et_settings_calorie"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Calorie per day"
+                android:text=""
+                android:textSize="20sp"
+                app:met_baseColor="@color/colorBlack"
+                app:met_floatingLabel="highlight"
+                android:inputType="number"
+                app:met_primaryColor="?colorAccent"
+                app:met_singleLineEllipsis="true" />
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/et_settings_weight"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Weight (in kg)"
+                android:text=""
+                android:textSize="20sp"
+                app:met_baseColor="@color/colorBlack"
+                app:met_floatingLabel="highlight"
+                android:inputType="number"
+                app:met_primaryColor="?colorAccent"
+                app:met_singleLineEllipsis="true" />
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/et_settings_height"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Height (in cm)"
+                android:text=""
+                android:textSize="20sp"
+                app:met_baseColor="@color/colorBlack"
+                app:met_floatingLabel="highlight"
+                android:inputType="number"
+                app:met_primaryColor="?colorAccent"
+                app:met_singleLineEllipsis="true" />
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/et_settings_blood"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Blood Sugar (in mg/dL)"
+                android:text=""
+                android:textSize="20sp"
+                app:met_baseColor="@color/colorBlack"
+                app:met_floatingLabel="highlight"
+                android:inputType="number"
+                app:met_primaryColor="?colorAccent"
+                app:met_singleLineEllipsis="true" />
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/et_settings_chol"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Cholesterol Lebel (in mg/dL)"
+                android:text=""
+                android:textSize="20sp"
+                app:met_baseColor="@color/colorBlack"
+                app:met_floatingLabel="highlight"
+                android:inputType="number"
+                app:met_primaryColor="?colorAccent"
+                app:met_singleLineEllipsis="true" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Goals"
+                android:textSize="15sp"
+                android:textStyle="bold"/>
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RadioButton
+                    android:id="@+id/rb1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:checked="true"
+                    android:text="Maintain Your Current Weight" />
+
+                <RadioButton
+                    android:id="@+id/rb2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Weight Loss" />
+
+                <RadioButton
+                    android:id="@+id/rb3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Weight Gain" />
+
+                <RadioButton
+                    android:id="@+id/rb4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Reduce Sugar Blood Level" />
+
+                <RadioButton
+                    android:id="@+id/rb5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Reduce Cholesterol Level" />
+            </RadioGroup>
+
+            <Button
+                android:id="@+id/btn_settings_save"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@color/colorPrimary"
+                android:text="Save"/>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
 </LinearLayout>

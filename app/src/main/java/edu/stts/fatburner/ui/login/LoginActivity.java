@@ -58,10 +58,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btn_login : {
-                doLogin(tvEmail.getText().toString(),tvPassword.getText().toString());
+                if(isAllowed()) doLogin(tvEmail.getText().toString(),tvPassword.getText().toString());
                 break;
             }
         }
+    }
+
+    private boolean isAllowed(){
+        if(tvEmail.getText().toString().equals("")||tvPassword.getText().toString().equals("")) {
+            Toast.makeText(this, "All field must be filled in!", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
     }
 
     private void doLogin(final String email, String password){

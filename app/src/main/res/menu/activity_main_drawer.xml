@@ -9,6 +9,10 @@
             android:icon="@drawable/ic_settings"
             android:title="@string/label_settings" />
         <item
+            android:id="@+id/nav_pass"
+            android:icon="@drawable/ic_change_pass"
+            android:title="Change Password" />
+        <item
             android:id="@+id/nav_home"
             android:icon="@drawable/ic_home"
             android:title="@string/label_home" />

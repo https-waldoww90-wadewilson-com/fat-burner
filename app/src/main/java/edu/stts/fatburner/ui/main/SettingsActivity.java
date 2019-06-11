@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RadioButton;
 import android.widget.Toast;
 
 import com.rengwuxian.materialedittext.MaterialEditText;
@@ -25,18 +26,28 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class SettingsActivity extends AppCompatActivity {
-    private MaterialEditText etCalorie;
+    private MaterialEditText etCalorie,etWeight,etHeight,etChol,etSugar;
     private Button btnSave;
     private API mApiInterface;
     private SharedPreferences pref;
     private SweetAlertDialog pDialog;
+    private RadioButton rb1,rb2,rb3,rb4,rb5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
         etCalorie = findViewById(R.id.et_settings_calorie);
+        etWeight = findViewById(R.id.et_settings_weight);
+        etHeight = findViewById(R.id.et_settings_height);
+        etChol = findViewById(R.id.et_settings_chol);
+        etSugar = findViewById(R.id.et_settings_blood);
         btnSave = findViewById(R.id.btn_settings_save);
+        rb1 = findViewById(R.id.rb1);
+        rb2 = findViewById(R.id.rb2);
+        rb3 = findViewById(R.id.rb3);
+        rb4 = findViewById(R.id.rb4);
+        rb5 = findViewById(R.id.rb5);
         //untuk back button
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         //untuk judul activity
@@ -47,13 +58,35 @@ public class SettingsActivity extends AppCompatActivity {
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!etCalorie.getText().toString().equals("")){
-                    saveCalorieGoal(Double.parseDouble(etCalorie.getText().toString()));
-                }else Toast.makeText(SettingsActivity.this, "All Field must be filled!", Toast.LENGTH_SHORT).show();
+                if(isAllowed()){
+                    int temp = 1;
+                    if(rb1.isChecked()) temp = 1;
+                    else if(rb2.isChecked()) temp = 2;
+                    else if(rb3.isChecked()) temp = 3;
+                    else if(rb4.isChecked()) temp = 4;
+                    else if(rb5.isChecked()) temp = 5;
+                    saveCalorieGoal(Double.parseDouble(etCalorie.getText().toString()),
+                            Double.parseDouble(etWeight.getText().toString()),
+                            Double.parseDouble(etHeight.getText().toString()),
+                            Integer.parseInt(etSugar.getText().toString()+""),
+                            Integer.parseInt(etChol.getText().toString()+""),
+                            temp
+                        );
+                }
             }
         });
 
         loadCalorieGoal();
+    }
+
+    private boolean isAllowed(){
+        if(etCalorie.getText().toString().equals("")||etWeight.getText().toString().equals("")||
+                etHeight.getText().toString().equals("")||etSugar.getText().toString().equals("")
+                ||etChol.getText().toString().equals("")){
+            Toast.makeText(SettingsActivity.this, "All Field must be filled!", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
     }
 
     @Override
@@ -81,6 +114,15 @@ public class SettingsActivity extends AppCompatActivity {
             public void onResponse(Call<CalorieResponse> call, Response<CalorieResponse> res) {
                 CalorieResponse response = res.body();
                 etCalorie.setText((int)response.getCalorie()+"");
+                etWeight.setText(response.getWeight()+"");
+                etHeight.setText(response.getHeight()+"");
+                etChol.setText(response.getCholesterol()+"");
+                etSugar.setText(response.getBloodsugar()+"");
+                if(response.getGoal()==1) rb1.setChecked(true);
+                else if(response.getGoal()==2) rb2.setChecked(true);
+                else if(response.getGoal()==3) rb3.setChecked(true);
+                else if(response.getGoal()==4) rb4.setChecked(true);
+                else if(response.getGoal()==5) rb5.setChecked(true);
                 pDialog.dismissWithAnimation();
             }
 
@@ -92,7 +134,7 @@ public class SettingsActivity extends AppCompatActivity {
         });
     }
 
-    private void saveCalorieGoal(double calorie){
+    private void saveCalorieGoal(double calorie,double weight, double height, int blood,int chol,int goal){
         //untuk dialog
         pDialog = new SweetAlertDialog(this,SweetAlertDialog.PROGRESS_TYPE);
         pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
@@ -102,14 +144,17 @@ public class SettingsActivity extends AppCompatActivity {
 
         int userid = pref.getInt("userID",-1);
         String token = pref.getString("token","");
-        Call<InsertResponse> loadCall = mApiInterface.updateCalorieGoal(token,userid,new CalorieUpdateBody(calorie));
+        Call<InsertResponse> loadCall = mApiInterface.updateCalorieGoal(token,userid,new CalorieUpdateBody(calorie,weight,height,blood,chol,goal));
         loadCall.enqueue(new Callback<InsertResponse>() {
             @Override
             public void onResponse(Call<InsertResponse> call, Response<InsertResponse> res) {
                 InsertResponse response = res.body();
                 Toast.makeText(SettingsActivity.this, response.getMessage(), Toast.LENGTH_LONG).show();
                 pDialog.dismissWithAnimation();
-                if (response != null && !response.isError()) finish();
+                if (response != null && !response.isError()){
+                    setGoalPref(goal);
+                    finish();
+                }
             }
 
             @Override
@@ -118,5 +163,11 @@ public class SettingsActivity extends AppCompatActivity {
                 Toast.makeText(SettingsActivity.this,t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    private void setGoalPref(int goal){
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putString("goal",String.valueOf(goal));
+        editor.apply();
     }
 }
