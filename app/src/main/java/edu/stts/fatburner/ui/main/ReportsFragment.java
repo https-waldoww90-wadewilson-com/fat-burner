@@ -244,40 +244,34 @@ public class ReportsFragment extends Fragment {
         listSnack.clear();
 
         for(int i=0;i<data.size();i++){
-            Log.d("COBA",i+"");
-            Log.d("COBA",data.get(i).getTipe()+"");
-            Log.d("COBA",data.get(i).getJumlah()+","+data.get(i).getKalori()+"");
             if(data.get(i).getTipe().toLowerCase().equals("breakfast")) {
-                Log.d("COBA","msk breakfast");
                 totalBreakfast += data.get(i).getJumlah() * data.get(i).getKalori();
                 listBreakfast.add(data.get(i));
             }else if(data.get(i).getTipe().toLowerCase().equals("lunch")) {
-                Log.d("COBA","msk lunch");
                 totalLunch += data.get(i).getJumlah() * data.get(i).getKalori();
                 listLunch.add(data.get(i));
             }else if(data.get(i).getTipe().toLowerCase().equals("dinner")) {
-                Log.d("COBA","msk dinner");
                 totalDinner += data.get(i).getJumlah() * data.get(i).getKalori();
                 listDinner.add(data.get(i));
             }else if(data.get(i).getTipe().toLowerCase().equals("snack")) {
-                Log.d("COBA","msk snack");
                 totalSnack += data.get(i).getJumlah() * data.get(i).getKalori();
                 listSnack.add(data.get(i));
             }
         }
-
 
         tvCalBreakfast.setText(String.valueOf(totalBreakfast));
         tvCalLunch.setText(String.valueOf(totalLunch));
         tvCalDinner.setText(String.valueOf(totalDinner));
         tvCalSnack.setText(String.valueOf(totalSnack));
 
-        Log.d("COBA","setelah for");
-        Log.d("COBA","breakfast"+totalBreakfast+"");
-        Log.d("COBA","lunch"+totalLunch+"");
-        Log.d("COBA","dinner"+totalDinner+"");
-        Log.d("COBA","snack"+totalSnack+"");
-
+        //cek lebih kalori
+        int tot = totalBreakfast + totalLunch + totalDinner + totalSnack;
+        if(tot > userCalorieGoal){
+            SweetAlertDialog d = new SweetAlertDialog(requireContext())
+                    .setTitleText("Alert")
+                    .setContentText("You've reached your maximum dialy calorie limit!");
+            d.show();
+        }
 
         displayFood(data);
         if(totalBreakfast>0 || totalLunch>0 || totalDinner>0 || totalSnack>0){
@@ -301,7 +295,7 @@ public class ReportsFragment extends Fragment {
         Log.d("COBA","dinner"+dinner+"");
         Log.d("COBA","snack"+snack+"");
         int total = breakfast + lunch + dinner + snack;
-        double percent = (double) total / userCalorieGoal * 100;
+        double percent = (double) total * 100 / userCalorieGoal;
         Log.d("COBA",percent+"");
         tvPercentGoal.setText((int) percent + "% of goal");
         if(percent > 100) tvPercentGoal.setTextColor(Color.parseColor("#FF0000"));

@@ -16,20 +16,35 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
+
 import edu.stts.fatburner.R;
 import edu.stts.fatburner.data.model.Food;
+import edu.stts.fatburner.data.network.API;
+import edu.stts.fatburner.data.network.ApiClient;
+import edu.stts.fatburner.data.network.body.FirebaseBody;
+import edu.stts.fatburner.data.network.response.InsertResponse;
 import edu.stts.fatburner.ui.login.LoginActivity;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private BottomNavigationView bottomNav;
     private SharedPreferences pref;
+    private API mApiInterface;
     public static final int CODE_INFOFOOD = 1;
+    public static final int CODE_SCHEDULE = 3;
     public static final int CODE_HOME = 2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +77,37 @@ public class MainActivity extends AppCompatActivity
 
         //Set Default biar menu home ditampilkan duluan
         loadFragment(new HomeFragment());
+
+        mApiInterface = ApiClient.getClient().create(API.class);
+
+        FirebaseInstanceId.getInstance().getInstanceId()
+                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                        if (!task.isSuccessful()) {
+                            return;
+                        }
+                        String token = task.getResult().getToken();
+                        saveFirebaseKey(token);
+                    }
+                });
+    }
+
+    private void saveFirebaseKey(String key){
+        int userid = pref.getInt("userID",-1);
+        String token = pref.getString("token","");
+        Call<InsertResponse> loadCall = mApiInterface.updateFirebaseToken(token,userid,new FirebaseBody(key));
+        loadCall.enqueue(new Callback<InsertResponse>() {
+            @Override
+            public void onResponse(Call<InsertResponse> call, Response<InsertResponse> res) {
+                InsertResponse response = res.body();
+            }
+
+            @Override
+            public void onFailure(Call<InsertResponse> call, Throwable t) {
+                Toast.makeText(MainActivity.this,t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     //Event saat button navigation diclick
@@ -91,6 +137,11 @@ public class MainActivity extends AppCompatActivity
                     fragment = new PlanFragment();
                     loadFragment(fragment);
                     return true;
+                case R.id.bnav_schedule:
+                    setTitle("Schedule");
+                    fragment = new ScheduleFragment();
+                    loadFragment(fragment);
+                    return true;
             }
             return false;
         }
@@ -114,6 +165,11 @@ public class MainActivity extends AppCompatActivity
         }else if(requestCode == CODE_HOME){
             if(resultCode == Activity.RESULT_OK){
                 loadFragment(new HomeFragment());
+            }
+        }if(requestCode == CODE_SCHEDULE){
+            if(resultCode == Activity.RESULT_OK){
+                Boolean isInsertSuccess = data.getExtras().getBoolean("data");
+                if(isInsertSuccess) loadFragment(new ScheduleFragment());
             }
         }
     }

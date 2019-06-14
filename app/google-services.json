@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "939518196697",
+    "firebase_url": "https://fat-burner-d0d53.firebaseio.com",
+    "project_id": "fat-burner-d0d53",
+    "storage_bucket": "fat-burner-d0d53.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:939518196697:android:6d27a1487c6dca68",
+        "android_client_info": {
+          "package_name": "edu.stts.fatburner"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "939518196697-f66aad9on8n3vh3d1gu4b36eg24d37qr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "edu.stts.fatburner",
+            "certificate_hash": "b3b8d7824a0647e6bafb5953585160ac5b654f61"
+          }
+        },
+        {
+          "client_id": "939518196697-tmpmp52kj00hhnf22ui9j6o5gpssku6h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCntvXdLduVP1n5OCJHDMR5Er0Xru7dbes"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "939518196697-tmpmp52kj00hhnf22ui9j6o5gpssku6h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

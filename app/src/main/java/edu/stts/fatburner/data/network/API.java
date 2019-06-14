@@ -11,10 +11,12 @@ import edu.stts.fatburner.data.model.LogWorkout;
 import edu.stts.fatburner.data.model.User;
 import edu.stts.fatburner.data.model.Workout;
 import edu.stts.fatburner.data.network.body.CalorieUpdateBody;
+import edu.stts.fatburner.data.network.body.FirebaseBody;
 import edu.stts.fatburner.data.network.body.LogFoodBody;
 import edu.stts.fatburner.data.network.body.LogWorkoutBody;
 import edu.stts.fatburner.data.network.body.LoginBody;
 import edu.stts.fatburner.data.network.body.PasswordBody;
+import edu.stts.fatburner.data.network.body.ScheduleBody;
 import edu.stts.fatburner.data.network.body.UpdateArticleBody;
 import edu.stts.fatburner.data.network.body.UpdateLogFoodBody;
 import edu.stts.fatburner.data.network.body.UpdateLogWorkoutBody;
@@ -22,6 +24,7 @@ import edu.stts.fatburner.data.network.response.CalorieResponse;
 import edu.stts.fatburner.data.network.response.InsertResponse;
 import edu.stts.fatburner.data.network.response.LoginResponse;
 import edu.stts.fatburner.data.network.response.RegisterResponse;
+import edu.stts.fatburner.data.network.response.ScheduleResponse;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -60,6 +63,12 @@ public interface API {
     @POST("api/password/update/{userid}")
     Call<InsertResponse> updatePassword(@Header("Authorization") String token,@Path("userid") int userid,@Body PasswordBody body);
 
+    @POST("api/firebase/{userid}")
+    Call<InsertResponse> updateFirebaseToken(@Header("Authorization") String token,@Path("userid") int userid,@Body FirebaseBody body);
+
+    @POST("api/schedule/insert")
+    Call<InsertResponse> saveSchedule(@Header("Authorization") String token,@Body ScheduleBody body);
+
     @Multipart
     @POST("api/article/insert")
     Call<InsertResponse> uploadImage(@Header("Authorization") String token,@Part("user_id") RequestBody id, @Part("judul") RequestBody judul, @Part("isi") RequestBody isi, @Part MultipartBody.Part imageurl);
@@ -88,6 +97,9 @@ public interface API {
     @GET("api/calorie/{id}")
     Call<CalorieResponse> getCalorie(@Header("Authorization") String token, @Path("id") int userId);
 
+    @GET("api/schedule/log/{userid}/{filter}/")
+    Call<List<ScheduleResponse>> getSchedule(@Header("Authorization") String token, @Path("userid") int userID, @Path("filter") String filter);
+
     @DELETE("api/food/log/delete/{id}/")
     Call<InsertResponse> deleteLogFood(@Header("Authorization") String token,@Path("id") int logId);
 
@@ -96,4 +108,7 @@ public interface API {
 
     @DELETE("api/article/delete/{id}/")
     Call<InsertResponse> deleteArticle(@Header("Authorization") String token,@Path("id") int logId);
+
+    @DELETE("api/schedule/delete/{id}/")
+    Call<InsertResponse> deleteSchedule(@Header("Authorization") String token,@Path("id") int logId);
 }

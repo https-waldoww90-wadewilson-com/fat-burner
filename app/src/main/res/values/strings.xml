@@ -19,7 +19,7 @@
 
     <string-array name="time_array">
         <item>Today</item>
-        <item>This week</item>
+        <item>This month</item>
         <item>This year</item>
     </string-array>
 

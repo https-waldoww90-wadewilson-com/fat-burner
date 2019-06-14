@@ -355,6 +355,7 @@ public class DiaryFragment extends Fragment implements View.OnClickListener{
                     Intent i = new Intent(getActivity(),FoodActivity.class);
                     i.putExtra("type","breakfast");
                     i.putExtra("category",categoryName);
+                    i.putExtra("from","diary");
                     getActivity().startActivityForResult(i,MainActivity.CODE_INFOFOOD);
                 }
             });
@@ -368,6 +369,7 @@ public class DiaryFragment extends Fragment implements View.OnClickListener{
                     Intent i = new Intent(getActivity(),FoodActivity.class);
                     i.putExtra("type","lunch");
                     i.putExtra("category",categoryName);
+                    i.putExtra("from","diary");
                     getActivity().startActivityForResult(i,MainActivity.CODE_INFOFOOD);
                 }
             });
@@ -381,6 +383,7 @@ public class DiaryFragment extends Fragment implements View.OnClickListener{
                     Intent i = new Intent(getActivity(),FoodActivity.class);
                     i.putExtra("type","dinner");
                     i.putExtra("category",categoryName);
+                    i.putExtra("from","diary");
                     getActivity().startActivityForResult(i,MainActivity.CODE_INFOFOOD);
                 }
             });
@@ -394,6 +397,7 @@ public class DiaryFragment extends Fragment implements View.OnClickListener{
                     Intent i = new Intent(getActivity(),FoodActivity.class);
                     i.putExtra("type","snack");
                     i.putExtra("category",categoryName);
+                    i.putExtra("from","diary");
                     getActivity().startActivityForResult(i,MainActivity.CODE_INFOFOOD);
                 }
             });
