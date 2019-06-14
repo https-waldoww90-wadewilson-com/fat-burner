@@ -85,9 +85,11 @@ public class MainActivity extends AppCompatActivity
                     @Override
                     public void onComplete(@NonNull Task<InstanceIdResult> task) {
                         if (!task.isSuccessful()) {
+                            Log.d("COBA","Main:error");
                             return;
                         }
                         String token = task.getResult().getToken();
+                        Log.d("COBA","Main:"+token);
                         saveFirebaseKey(token);
                     }
                 });
@@ -209,6 +211,9 @@ public class MainActivity extends AppCompatActivity
             loadFragment(new PlanFragment());
         }else if( id == R.id.nav_pass){
             startActivity(new Intent(MainActivity.this,ChangePasswordActivity.class));
+        }else if (id == R.id.nav_schedule) {
+            setTitle("Schedule");
+            loadFragment(new ScheduleFragment());
         }
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

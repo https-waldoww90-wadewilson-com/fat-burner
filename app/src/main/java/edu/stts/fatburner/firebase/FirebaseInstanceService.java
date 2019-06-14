@@ -85,6 +85,6 @@ public class FirebaseInstanceService extends FirebaseMessagingService {
     @Override
     public void onNewToken(String s) {
         super.onNewToken(s);
-        Log.d("COBA","TOKEN: "+s);
+        Log.d("COBA",s);
     }
 }
