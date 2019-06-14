@@ -127,7 +127,6 @@ public class FoodActivity extends AppCompatActivity implements SearchView.OnQuer
         //ambil id user
         int userid = prefs.getInt("userID",-1);
         String token = prefs.getString("token","");
-        Toast.makeText(this, time, Toast.LENGTH_SHORT).show();
         ScheduleBody body = new ScheduleBody(userid,Integer.parseInt(f.getId()+""),time,type);
         Call<InsertResponse> saveCall = mApiInterface.saveSchedule(token,body);
         saveCall.enqueue(new retrofit2.Callback<InsertResponse>() {
